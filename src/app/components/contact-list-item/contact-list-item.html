@@ -1,0 +1,126 @@
+<div class="contact-list-item" 
+     [class]="variant()"
+     [class.favorite]="contacto().isFavorite"
+     [class.compact]="variant() === 'compact'"
+     [class.detailed]="variant() === 'detailed'"
+     (click)="onContactClick()"
+     role="button"
+     tabindex="0"
+     [attr.aria-label]="'Ver detalles de ' + getFullName()">
+  
+  <div class="contact-avatar">
+    @if (contacto().image) {
+      <img [src]="contacto().image" 
+           [alt]="getFullName()" 
+           class="avatar-image"
+           (error)="contacto().image = ''">
+    } @else {
+      <div class="avatar-initials">
+        {{ getContactInitials() }}
+      </div>
+    }
+    
+    @if (contacto().isFavorite) {
+      <div class="favorite-badge" title="Contacto favorito">
+        <i class="fas fa-star"></i>
+      </div>
+    }
+  </div>
+
+  <div class="contact-info">
+    <div class="contact-header">
+      <h3 class="contact-name">{{ getFullName() }}</h3>
+      
+      @if (showIndex()) {
+        <span class="contact-index">#{{ index() + 1 }}</span>
+      }
+    </div>
+
+    @if (variant() === 'detailed' && hasContactInfo()) {
+      <div class="contact-details">
+        @if (contacto().company) {
+          <span class="contact-company">
+            <i class="fas fa-building"></i>
+            {{ contacto().company }}
+          </span>
+        }
+        
+        @if (contacto().email) {
+          <a [href]="'mailto:' + contacto().email" 
+             class="contact-email"
+             (click)="$event.stopPropagation()">
+            <i class="fas fa-envelope"></i>
+            {{ contacto().email }}
+          </a>
+        }
+        
+        @if (contacto().number) {
+          <a [href]="'tel:' + contacto().number" 
+             class="contact-phone"
+             (click)="$event.stopPropagation()">
+            <i class="fas fa-phone"></i>
+            {{ contacto().number }}
+          </a>
+        }
+      </div>
+    }
+
+    @if (variant() !== 'detailed' && hasContactInfo()) {
+      <div class="contact-badges">
+        @if (contacto().email) {
+          <span class="badge email-badge" title="Tiene email">
+            <i class="fas fa-envelope"></i>
+          </span>
+        }
+        @if (contacto().number) {
+          <span class="badge phone-badge" title="Tiene teléfono">
+            <i class="fas fa-phone"></i>
+          </span>
+        }
+        @if (contacto().company) {
+          <span class="badge company-badge" title="Tiene compañía">
+            <i class="fas fa-building"></i>
+          </span>
+        }
+      </div>
+    }
+
+    @if (variant() === 'detailed' && contacto().description) {
+      <p class="contact-description">{{ contacto().description }}</p>
+    }
+  </div>
+
+  @if (showActions()) {
+    <div class="contact-actions" (click)="$event.stopPropagation()">
+      <button class="btn-icon favorite-btn"
+              [class.favorited]="contacto().isFavorite"
+              [class.loading]="isTogglingFavorite"
+              (click)="onToggleFavorite($event)"
+              [title]="contacto().isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'"
+              [disabled]="isTogglingFavorite">
+        <i class="fas" 
+           [class.fa-star]="contacto().isFavorite" 
+           [class.fa-star]="!contacto().isFavorite"
+           [class.fa-spinner]="isTogglingFavorite"
+           [class.fa-spin]="isTogglingFavorite"></i>
+      </button>
+
+      <button class="btn-icon edit-btn"
+              (click)="onEditContact($event)"
+              title="Editar contacto">
+        <i class="fas fa-edit"></i>
+      </button>
+
+      <button class="btn-icon delete-btn"
+              [class.loading]="isDeleting"
+              (click)="showDeleteModal()"
+              [title]="isDeleting ? 'Eliminando...' : 'Eliminar contacto'"
+              [disabled]="isDeleting">
+        <i class="fas" 
+           [class.fa-trash]="!isDeleting" 
+           [class.fa-spinner]="isDeleting"
+           [class.fa-spin]="isDeleting"></i>
+      </button>
+    </div>
+  }
+</div>

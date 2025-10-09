@@ -1,0 +1,873 @@
+
+$deep-purple: #4A148C;
+$royal-purple: #6A1B9A;
+$vibrant-purple: #8E24AA;
+$soft-purple: #AB47BC;
+$light-purple: #E1BEE7;
+$pale-lavender: #F3E5F6;
+$white: #FFFFFF;
+$dark-text: #2D2B55;
+$medium-text: #6C63A0;
+$light-text: #9E9BC7;
+
+
+$shadow-soft: 0 12px 32px rgba(74, 20, 140, 0.15);
+$shadow-medium: 0 20px 40px rgba(74, 20, 140, 0.2);
+$shadow-strong: 0 24px 60px rgba(74, 20, 140, 0.25);
+$shadow-extra: 0 32px 80px rgba(74, 20, 140, 0.3);
+
+
+$transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+$transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+
+$border-radius: 28px;
+$border-radius-sm: 18px;
+$border-radius-xs: 12px;
+$spacing-xs: 8px;
+$spacing-sm: 16px;
+$spacing-md: 24px;
+$spacing-lg: 32px;
+$spacing-xl: 40px;
+
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0) rotate(0deg) scale(1); 
+  }
+  33% { 
+    transform: translateY(-12px) rotate(2deg) scale(1.02); 
+  }
+  66% { 
+    transform: translateY(6px) rotate(-2deg) scale(0.98); 
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 
+      0 0 20px rgba(142, 36, 170, 0.4),
+      0 0 40px rgba(142, 36, 170, 0.2),
+      0 0 60px rgba(142, 36, 170, 0.1);
+  }
+  50% { 
+    box-shadow: 
+      0 0 30px rgba(142, 36, 170, 0.6),
+      0 0 60px rgba(142, 36, 170, 0.3),
+      0 0 90px rgba(142, 36, 170, 0.2);
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+
+@mixin glass-effect($intensity: 0.96, $blur: 25px) {
+  background: rgba(255, 255, 255, $intensity);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@mixin gradient-text($gradient) {
+  background: $gradient;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+}
+
+@mixin focus-ring {
+  outline: none;
+  box-shadow: 
+    0 0 0 4px rgba(142, 36, 170, 0.15),
+    0 0 0 1px $vibrant-purple;
+}
+
+@mixin perfect-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin shimmer-effect {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+
+.register-page {
+  min-height: 100vh;
+  @include perfect-center;
+  padding: $spacing-sm;
+  background: linear-gradient(135deg, $deep-purple 0%, $vibrant-purple 45%, $royal-purple 100%);
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+.register-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(171, 71, 188, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(142, 36, 170, 0.3) 0%, transparent 50%),
+      linear-gradient(45deg, rgba(126, 87, 194, 0.15) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 20% 60%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 60% 10%, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 300px 300px;
+    animation: float 20s infinite linear;
+    pointer-events: none;
+  }
+}
+
+.floating-shapes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  
+  .shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.1;
+    background: linear-gradient(135deg, $light-purple 0%, $white 100%);
+    filter: blur(2px);
+    animation-timing-function: ease-in-out;
+    
+    &.shape-1 {
+      width: 300px;
+      height: 300px;
+      top: -150px;
+      left: -150px;
+      animation: float 25s ease-in-out infinite;
+    }
+    
+    &.shape-2 {
+      width: 220px;
+      height: 220px;
+      bottom: -110px;
+      right: -110px;
+      animation: float 30s ease-in-out infinite reverse;
+      animation-delay: 2s;
+    }
+    
+    &.shape-3 {
+      width: 180px;
+      height: 180px;
+      top: 30%;
+      right: 10%;
+      animation: float 20s ease-in-out infinite;
+      animation-delay: 1s;
+    }
+    
+    &.shape-4 {
+      width: 140px;
+      height: 140px;
+      bottom: 25%;
+      left: 15%;
+      animation: float 25s ease-in-out infinite reverse;
+      animation-delay: 3s;
+    }
+  }
+}
+
+.register-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  animation: fadeInUp 0.8s ease-out;
+  
+  @media (max-width: 768px) {
+    max-width: 90%;
+  }
+}
+
+.register-card {
+  @include glass-effect(0.98, 35px);
+  border-radius: $border-radius;
+  padding: $spacing-xl;
+  box-shadow: $shadow-extra;
+  transition: $transition-smooth;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    @include shimmer-effect;
+    transition: left 1.5s ease;
+    z-index: 1;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, $royal-purple, $vibrant-purple, $soft-purple);
+    border-radius: 6px 6px 0 0;
+    z-index: 2;
+  }
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: $shadow-extra;
+    
+    &::before {
+      left: 100%;
+    }
+  }
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: $spacing-xl;
+  position: relative;
+  animation: slideInFromTop 0.6s ease-out;
+  
+  .logo {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto $spacing-lg;
+    position: relative;
+    
+    .logo-inner {
+      width: 100%;
+      height: 100%;
+      @include perfect-center;
+      background: linear-gradient(135deg, $royal-purple 0%, $vibrant-purple 100%);
+      border-radius: 50%;
+      color: $white;
+      font-size: 2.8rem;
+      box-shadow: 
+        0 10px 30px rgba(106, 27, 154, 0.4),
+        inset 0 0 20px rgba(255, 255, 255, 0.3);
+      position: relative;
+      z-index: 2;
+      animation: pulse-glow 4s ease-in-out infinite;
+      transition: $transition-smooth;
+      
+      &:hover {
+        transform: scale(1.08) rotate(8deg);
+        box-shadow: 
+          0 15px 40px rgba(106, 27, 154, 0.5),
+          inset 0 0 25px rgba(255, 255, 255, 0.4);
+      }
+    }
+    
+    .logo-glow {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      background: linear-gradient(135deg, $royal-purple, $vibrant-purple);
+      border-radius: 50%;
+      filter: blur(15px);
+      opacity: 0.6;
+      z-index: 1;
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: $spacing-xs;
+    letter-spacing: -0.5px;
+    position: relative;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -$spacing-xs;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, $royal-purple, $vibrant-purple);
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+    
+    &:hover::after {
+      width: 120px;
+    }
+  }
+  
+  p {
+    color: $medium-text;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: $spacing-md;
+    line-height: 1.6;
+  }
+}
+
+.register-form {
+  .form-group {
+    margin-bottom: $spacing-lg;
+    position: relative;
+    width: 100%;
+    
+    .input-container {
+      position: relative;
+      width: 100%;
+      
+      .input-icon {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $vibrant-purple;
+        font-size: 1.3rem;
+        z-index: 3;
+        transition: $transition-smooth;
+        pointer-events: none;
+      }
+      
+      input {
+        width: 100%;
+        padding: 20px 20px 20px 60px;
+        border: 2px solid rgba(142, 36, 170, 0.15);
+        background: rgba(255, 255, 255, 0.97);
+        border-radius: $border-radius-sm;
+        font-size: 1.05rem;
+        color: $dark-text;
+        transition: $transition-smooth;
+        font-weight: 500;
+        line-height: 1.6;
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
+        
+        &::placeholder {
+          color: transparent;
+        }
+        
+        &.error {
+          border-color: rgba(220, 53, 69, 0.6);
+          box-shadow: inset 0 2px 6px rgba(220, 53, 69, 0.1);
+        }
+        
+        &:focus {
+          @include focus-ring;
+          background: $white;
+          transform: translateY(-3px);
+          border-color: $vibrant-purple;
+          box-shadow: 
+            inset 0 2px 8px rgba(142, 36, 170, 0.15),
+            0 5px 20px rgba(142, 36, 170, 0.2);
+          
+          + .input-icon {
+            color: $deep-purple;
+            transform: translateY(-50%) scale(1.25);
+          }
+          
+          ~ .input-underline {
+            width: 100%;
+          }
+          
+          ~ label {
+            top: -22px;
+            left: 0;
+            font-size: 0.9rem;
+            color: $vibrant-purple;
+            font-weight: 700;
+            background: linear-gradient(transparent 50%, rgba(255, 255, 255, 0.98) 50%);
+            padding: 0 10px;
+          }
+        }
+        
+        &:not(:placeholder-shown) ~ label {
+          top: -22px;
+          left: 0;
+          font-size: 0.9rem;
+          color: $vibrant-purple;
+          font-weight: 700;
+          background: linear-gradient(transparent 50%, rgba(255, 255, 255, 0.98) 50%);
+          padding: 0 10px;
+        }
+      }
+      
+      label {
+        position: absolute;
+        top: 20px;
+        left: 60px;
+        font-size: 1.05rem;
+        color: $light-text;
+        transition: $transition-smooth;
+        pointer-events: none;
+        font-weight: 500;
+        padding: 0 8px;
+        margin-left: -8px;
+        z-index: 2;
+      }
+      
+      .input-underline {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background: linear-gradient(90deg, $royal-purple, $vibrant-purple);
+        border-radius: 0 0 3px 3px;
+        transition: $transition-smooth;
+        z-index: 3;
+      }
+      
+      .password-toggle {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $light-text;
+        cursor: pointer;
+        transition: $transition-smooth;
+        z-index: 4;
+        background: none;
+        border: none;
+        padding: 10px;
+        border-radius: 50%;
+        
+        &:hover {
+          color: $vibrant-purple;
+          background: rgba(142, 36, 170, 0.1);
+          transform: translateY(-50%) scale(1.15);
+        }
+      }
+    }
+    
+    .error {
+      color: #dc3545;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      
+      &.main-error {
+        text-align: center;
+        margin-top: $spacing-md;
+        padding: 14px;
+        background: rgba(220, 53, 69, 0.1);
+        border-radius: $border-radius-xs;
+        border-left: 4px solid #dc3545;
+        font-weight: 600;
+      }
+      
+      &::before {
+        content: '⚠';
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+.register-button {
+  width: 100%;
+  padding: 20px 28px;
+  background: linear-gradient(135deg, $royal-purple 0%, $vibrant-purple 100%);
+  color: $white;
+  border: none;
+  border-radius: $border-radius-sm;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: $transition-smooth;
+  position: relative;
+  overflow: hidden;
+  @include perfect-center;
+  gap: 12px;
+  margin-top: $spacing-md;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 8px 25px rgba(106, 27, 154, 0.4);
+  
+  .button-text {
+    position: relative;
+    z-index: 3;
+  }
+  
+  .button-icon {
+    position: relative;
+    z-index: 3;
+    transition: $transition-smooth;
+    font-size: 1.2rem;
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    transition: left 0.8s ease;
+    z-index: 1;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, $deep-purple 0%, $royal-purple 100%);
+    opacity: 0;
+    transition: $transition-smooth;
+    z-index: 2;
+  }
+  
+  &:hover:not(:disabled) {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(106, 27, 154, 0.5);
+    
+    &::before {
+      left: 100%;
+    }
+    
+    &::after {
+      opacity: 1;
+    }
+    
+    .button-icon {
+      transform: translateX(6px);
+    }
+  }
+  
+  &:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 8px 20px rgba(106, 27, 154, 0.4);
+  }
+  
+  &:disabled {
+    background: $medium-text;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    
+    &:hover {
+      &::before {
+        left: -100%;
+      }
+      
+      .button-icon {
+        transform: none;
+      }
+    }
+  }
+}
+
+.login-link {
+  text-align: center;
+  margin-top: $spacing-xl;
+  padding-top: $spacing-lg;
+  border-top: 1px solid rgba(142, 36, 170, 0.1);
+  
+  p {
+    color: $medium-text;
+    font-size: 1rem;
+    margin: 0;
+    font-weight: 500;
+  }
+  
+  .login-btn {
+    color: $vibrant-purple;
+    text-decoration: none;
+    font-weight: 700;
+    transition: $transition-smooth;
+    position: relative;
+    padding: 2px 0;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, $vibrant-purple, $deep-purple);
+      transition: width 0.3s ease;
+      border-radius: 1px;
+    }
+    
+    &:hover {
+      color: $deep-purple;
+      
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.home-link {
+  text-align: center;
+  margin-top: $spacing-lg;
+  
+  .home-btn {
+    color: $medium-text;
+    text-decoration: none;
+    font-weight: 600;
+    transition: $transition-smooth;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: $border-radius-xs;
+    
+    &:hover {
+      color: $vibrant-purple;
+      background: rgba(142, 36, 170, 0.1);
+      transform: translateX(-5px);
+    }
+  }
+}
+
+
+@media (max-width: 768px) {
+  .register-page {
+    padding: $spacing-xs;
+  }
+  
+  .register-card {
+    padding: $spacing-lg;
+    border-radius: 24px;
+  }
+  
+  .register-header {
+    .logo {
+      width: 95px;
+      height: 95px;
+      
+      .logo-inner {
+        font-size: 2.4rem;
+      }
+    }
+    
+    h1 {
+      font-size: 2.2rem;
+    }
+    
+    p {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .register-card {
+    padding: $spacing-md;
+    border-radius: 20px;
+  }
+  
+  .register-header {
+    .logo {
+      width: 85px;
+      height: 85px;
+      margin-bottom: $spacing-md;
+      
+      .logo-inner {
+        font-size: 2.2rem;
+      }
+    }
+    
+    h1 {
+      font-size: 2rem;
+    }
+    
+    p {
+      font-size: 1rem;
+    }
+  }
+  
+  .register-form {
+    .form-group {
+      .input-container {
+        input {
+          padding: 18px 18px 18px 55px;
+          font-size: 1rem;
+        }
+        
+        .input-icon {
+          left: 18px;
+          font-size: 1.2rem;
+        }
+        
+        label {
+          left: 55px;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+  
+  .register-button {
+    padding: 18px 24px;
+    font-size: 1rem;
+  }
+  
+  .home-link {
+    .home-btn {
+      padding: 8px 14px;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .register-card {
+    @include glass-effect(0.92, 25px);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  input {
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: $white !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+  }
+  
+  label {
+    background: linear-gradient(transparent 50%, $deep-purple 50%) !important;
+  }
+}
+
+*:focus-visible {
+  outline: 2px solid $vibrant-purple;
+  outline-offset: 3px;
+}
+
+.will-change {
+  will-change: transform, opacity;
+}
+
+@media (max-width: 360px) {
+  .register-card {
+    padding: $spacing-sm;
+  }
+  
+  .register-header {
+    h1 {
+      font-size: 1.8rem;
+    }
+  }
+  
+  .register-form {
+    .form-group {
+      .input-container {
+        input {
+          padding: 16px 16px 16px 50px;
+        }
+        
+        .input-icon {
+          left: 16px;
+          font-size: 1.1rem;
+        }
+        
+        label {
+          left: 50px;
+          font-size: 0.95rem;
+        }
+      }
+    }
+  }
+}

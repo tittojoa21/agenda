@@ -1,0 +1,295 @@
+<div class="contact-list-page">
+  <div class="header-section">
+    <div class="header-content">
+      <h1 class="page-title">
+        <i class="fas fa-address-book"></i>
+        Mis Contactos
+      </h1>
+      <div class="header-actions">
+        <button class="logout-btn" (click)="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
+    
+    <div class="search-section">
+      <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input 
+          type="text" 
+          placeholder="Buscar contactos..." 
+          class="search-input"
+          [value]="searchTerm"
+          (input)="onSearch($event)">
+        <button class="clear-search" *ngIf="searchTerm" (click)="clearSearch()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando contactos...</p>
+    </div>
+  }
+
+  @else if (showError && !isLoading) {
+    <div class="error-state">
+      <div class="error-content">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h3>Error al cargar contactos</h3>
+        <p>{{ errorMessage }}</p>
+        <button class="btn-primary" (click)="reloadContacts()">
+          <i class="fas fa-redo"></i>
+          Reintentar
+        </button>
+      </div>
+    </div>
+  }
+
+  @else if (!isLoading && !showError) {
+    <div class="stats-section">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="stat-info">
+          <span class="stat-number">{{ totalContacts }}</span>
+          <span class="stat-label">Contactos totales</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon favorite">
+          <i class="fas fa-star"></i>
+        </div>
+        <div class="stat-info">
+          <span class="stat-number">{{ getFavoriteCount() }}</span>
+          <span class="stat-label">Favoritos</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contacts-section">
+      <div class="section-header">
+        <h2>Lista de Contactos</h2>
+        <button class="toggle-form-btn" (click)="toggleContactForm()">
+          <i class="fas" [class.fa-plus]="!showContactForm" [class.fa-times]="showContactForm"></i>
+          {{ showContactForm ? 'Cancelar' : 'Nuevo Contacto' }}
+        </button>
+      </div>
+
+      <div class="contact-form-container" [class.active]="showContactForm">
+        <div class="form-card">
+          <h3>
+            <i class="fas fa-user-plus"></i>
+            Crear Nuevo Contacto
+          </h3>
+          
+          <form (ngSubmit)="createContact()" class="contact-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="first-name" class="form-label">
+                  <i class="fas fa-user"></i>
+                  Nombre *
+                </label>
+                <input 
+                  type="text" 
+                  id="first-name" 
+                  [(ngModel)]="newContact.firstName"
+                  name="firstName"
+                  required
+                  maxlength="50" 
+                  placeholder="Ingresa el nombre"
+                  class="form-input">
+              </div>
+
+              <div class="form-group">
+                <label for="last-name" class="form-label">
+                  <i class="fas fa-user"></i>
+                  Apellido
+                </label>
+                <input 
+                  type="text" 
+                  id="last-name" 
+                  [(ngModel)]="newContact.lastName"
+                  name="lastName"
+                  maxlength="50"
+                  placeholder="Ingresa el apellido"
+                  class="form-input">
+              </div>
+
+              <div class="form-group">
+                <label for="email" class="form-label">
+                  <i class="fas fa-envelope"></i>
+                  Email
+                </label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  [(ngModel)]="newContact.email"
+                  name="email"
+                  maxlength="50"
+                  placeholder="ejemplo@correo.com"
+                  class="form-input">
+              </div>
+
+              <div class="form-group">
+                <label for="number" class="form-label">
+                  <i class="fas fa-phone"></i>
+                  Teléfono *
+                </label>
+                <input 
+                  type="tel" 
+                  id="number" 
+                  [(ngModel)]="newContact.number"
+                  name="number"
+                  required
+                  minlength="4" 
+                  maxlength="50" 
+                  placeholder="+1 234 567 890"
+                  class="form-input">
+              </div>
+
+              <div class="form-group full-width">
+                <label for="address" class="form-label">
+                  <i class="fas fa-map-marker-alt"></i>
+                  Dirección
+                </label>
+                <input 
+                  type="text" 
+                  id="address" 
+                  [(ngModel)]="newContact.address"
+                  name="address"
+                  maxlength="50"
+                  placeholder="Ingresa la dirección"
+                  class="form-input">
+              </div>
+
+              <div class="form-group">
+                <label for="company" class="form-label">
+                  <i class="fas fa-building"></i>
+                  Compañía
+                </label>
+                <input 
+                  type="text" 
+                  id="company" 
+                  [(ngModel)]="newContact.company"
+                  name="company"
+                  maxlength="50"
+                  placeholder="Nombre de la compañía"
+                  class="form-input">
+              </div>
+
+              <div class="form-group full-width">
+                <label for="description" class="form-label">
+                  <i class="fas fa-file-alt"></i>
+                  Descripción
+                </label>
+                <textarea 
+                  id="description" 
+                  [(ngModel)]="newContact.description"
+                  name="description"
+                  rows="3"
+                  placeholder="Descripción del contacto..."
+                  class="form-textarea"></textarea>
+              </div>
+
+              <div class="form-group full-width">
+                <label for="image" class="form-label">
+                  <i class="fas fa-image"></i>
+                  URL de Imagen
+                </label>
+                <input 
+                  type="url" 
+                  id="image" 
+                  [(ngModel)]="newContact.image"
+                  name="image"
+                  placeholder="https://ejemplo.com/imagen.jpg"
+                  class="form-input">
+              </div>
+            </div>
+
+            @if (showError && errorMessage) {
+              <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                {{ errorMessage }}
+              </div>
+            }
+
+            <div class="form-actions">
+              <button 
+                type="button" 
+                class="btn-secondary" 
+                (click)="toggleContactForm()">
+                <i class="fas fa-times"></i>
+                Cancelar
+              </button>
+              <button 
+                type="button" 
+                class="btn-secondary" 
+                (click)="crearContactoEjemplo()">
+                <i class="fas fa-magic"></i>
+                Ejemplo
+              </button>
+              <button 
+                type="submit" 
+                class="btn-primary" 
+                [disabled]="isSubmitting || !newContact.firstName || !newContact.number">
+                <i class="fas" [class.fa-plus]="!isSubmitting" [class.fa-spinner]="isSubmitting" [class.fa-spin]="isSubmitting"></i>
+                {{ isSubmitting ? 'Creando...' : 'Crear Contacto' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="contacts-container">
+        @if (showNoResults) {
+          <div class="no-results">
+            <i class="fas fa-search"></i>
+            <h3>No se encontraron contactos</h3>
+            <p>Intenta con otros términos de búsqueda</p>
+            <button class="btn-primary" (click)="clearSearch()">
+              <i class="fas fa-times"></i>
+              Limpiar búsqueda
+            </button>
+          </div>
+        }
+
+        @else if (showEmptyState) {
+          <div class="empty-state">
+            <div class="empty-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>No hay contactos</h3>
+            <p>Comienza agregando tu primer contacto</p>
+            <button class="btn-primary" (click)="toggleContactForm()">
+              <i class="fas fa-plus"></i>
+              Crear Primer Contacto
+            </button>
+          </div>
+        }
+
+        @else if (hasContacts && filteredContacts.length > 0) {
+          <div class="contacts-list">
+            @for (contacto of filteredContacts; track contacto.id; let i = $index) {
+              <app-contact-list-item 
+                [contacto]="contacto" 
+                [index]="i"
+                (contactUpdated)="onContactUpdate()"
+                (contactDeleted)="onContactDelete()">
+              </app-contact-list-item>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <button class="floating-action-btn" (click)="toggleContactForm()" *ngIf="!showContactForm">
+    <i class="fas fa-plus"></i>
+  </button>
+</div>
