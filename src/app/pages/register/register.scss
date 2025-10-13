@@ -1,4 +1,3 @@
-
 $deep-purple: #4A148C;
 $royal-purple: #6A1B9A;
 $vibrant-purple: #8E24AA;
@@ -10,43 +9,25 @@ $dark-text: #2D2B55;
 $medium-text: #6C63A0;
 $light-text: #9E9BC7;
 
+$dark-bg: #0f0f23;
+$dark-card: #24243a;
+$dark-text-primary: #f8fafc;
+$dark-text-secondary: #e2e8f0;
 
-$shadow-soft: 0 12px 32px rgba(74, 20, 140, 0.15);
-$shadow-medium: 0 20px 40px rgba(74, 20, 140, 0.2);
-$shadow-strong: 0 24px 60px rgba(74, 20, 140, 0.25);
-$shadow-extra: 0 32px 80px rgba(74, 20, 140, 0.3);
-
-
-$transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-$transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-
-$border-radius: 28px;
-$border-radius-sm: 18px;
+$border-radius: 24px;
+$border-radius-sm: 16px;
 $border-radius-xs: 12px;
-$spacing-xs: 8px;
 $spacing-sm: 16px;
 $spacing-md: 24px;
 $spacing-lg: 32px;
-$spacing-xl: 40px;
 
-
-@keyframes float {
-  0%, 100% { 
-    transform: translateY(0) rotate(0deg) scale(1); 
-  }
-  33% { 
-    transform: translateY(-12px) rotate(2deg) scale(1.02); 
-  }
-  66% { 
-    transform: translateY(6px) rotate(-2deg) scale(0.98); 
-  }
-}
+$transition-fast: transform 0.2s ease, opacity 0.2s ease;
+$transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translate3d(0, 40px, 0) scale(0.95);
+    transform: translate3d(0, 30px, 0) scale(0.98);
   }
   to {
     opacity: 1;
@@ -54,91 +35,61 @@ $spacing-xl: 40px;
   }
 }
 
-@keyframes pulse-glow {
+@keyframes float {
   0%, 100% { 
-    box-shadow: 
-      0 0 20px rgba(142, 36, 170, 0.4),
-      0 0 40px rgba(142, 36, 170, 0.2),
-      0 0 60px rgba(142, 36, 170, 0.1);
+    transform: translateY(0) scale(1); 
   }
   50% { 
-    box-shadow: 
-      0 0 30px rgba(142, 36, 170, 0.6),
-      0 0 60px rgba(142, 36, 170, 0.3),
-      0 0 90px rgba(142, 36, 170, 0.2);
+    transform: translateY(-10px) scale(1.02); 
   }
 }
 
-@keyframes slideInFromTop {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
+@keyframes backgroundFloat {
+  0%, 100% { 
+    transform: translateX(0) translateY(0); 
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  33% { 
+    transform: translateX(-10px) translateY(-5px); 
   }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
+  66% { 
+    transform: translateX(5px) translateY(8px); 
   }
 }
 
-
-@mixin glass-effect($intensity: 0.96, $blur: 25px) {
-  background: rgba(255, 255, 255, $intensity);
-  backdrop-filter: blur($blur);
-  -webkit-backdrop-filter: blur($blur);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-@mixin gradient-text($gradient) {
-  background: $gradient;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-size: 200% auto;
+@mixin glass-effect {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  
+  @media (prefers-color-scheme: dark) {
+    background: rgba($dark-card, 0.88);
+  }
 }
 
 @mixin focus-ring {
-  outline: none;
-  box-shadow: 
-    0 0 0 4px rgba(142, 36, 170, 0.15),
-    0 0 0 1px $vibrant-purple;
+  outline: 2px solid $vibrant-purple;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(142, 36, 170, 0.1);
 }
-
-@mixin perfect-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@mixin shimmer-effect {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.4),
-    transparent
-  );
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-}
-
 
 .register-page {
   min-height: 100vh;
-  @include perfect-center;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: $spacing-sm;
   background: linear-gradient(135deg, $deep-purple 0%, $vibrant-purple 45%, $royal-purple 100%);
   position: relative;
   overflow: hidden;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  line-height: 1.6;
+  font-family: system-ui, -apple-system, sans-serif;
+  
+  @media (prefers-color-scheme: dark) {
+    background: linear-gradient(135deg, #2d1b69 0%, #4a1e6b 45%, #3a1a5c 100%);
+  }
+  
+  @media (max-width: 360px) {
+    padding: 12px;
+  }
 }
 
 .register-background {
@@ -148,6 +99,7 @@ $spacing-xl: 40px;
   width: 100%;
   height: 100%;
   z-index: 1;
+  overflow: hidden;
   
   &::before {
     content: '';
@@ -157,10 +109,15 @@ $spacing-xl: 40px;
     right: 0;
     bottom: 0;
     background: 
-      radial-gradient(circle at 20% 30%, rgba(171, 71, 188, 0.3) 0%, transparent 50%),
-      radial-gradient(circle at 80% 70%, rgba(142, 36, 170, 0.3) 0%, transparent 50%),
-      linear-gradient(45deg, rgba(126, 87, 194, 0.15) 0%, transparent 50%);
+      radial-gradient(circle at 20% 30%, rgba(171, 71, 188, 0.25) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(142, 36, 170, 0.25) 0%, transparent 50%),
+      linear-gradient(45deg, rgba(126, 87, 194, 0.12) 0%, transparent 50%);
     pointer-events: none;
+    animation: backgroundFloat 20s ease-in-out infinite;
+    
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
   }
   
   &::after {
@@ -171,13 +128,17 @@ $spacing-xl: 40px;
     right: 0;
     bottom: 0;
     background-image: 
-      radial-gradient(circle at 20% 60%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-      radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-      radial-gradient(circle at 60% 10%, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-    background-size: 300px 300px;
-    animation: float 20s infinite linear;
+      radial-gradient(circle at 20% 60%, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 200px 200px;
+    opacity: 0.6;
     pointer-events: none;
+    
+    @media (prefers-color-scheme: dark) {
+      background-image: 
+        radial-gradient(circle at 20% 60%, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    }
   }
 }
 
@@ -186,48 +147,39 @@ $spacing-xl: 40px;
   width: 100%;
   height: 100%;
   z-index: 2;
+  pointer-events: none;
   
   .shape {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.1;
+    opacity: 0.08;
     background: linear-gradient(135deg, $light-purple 0%, $white 100%);
-    filter: blur(2px);
+    filter: blur(1px);
     animation-timing-function: ease-in-out;
     
+    @media (prefers-color-scheme: dark) {
+      background: linear-gradient(135deg, rgba(142, 36, 170, 0.3) 0%, rgba(171, 71, 188, 0.2) 100%);
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+    
     &.shape-1 {
-      width: 300px;
-      height: 300px;
-      top: -150px;
-      left: -150px;
-      animation: float 25s ease-in-out infinite;
+      width: min(200px, 30vw);
+      height: min(200px, 30vw);
+      top: 10%;
+      left: 5%;
+      animation: float 8s ease-in-out infinite;
     }
     
     &.shape-2 {
-      width: 220px;
-      height: 220px;
-      bottom: -110px;
-      right: -110px;
-      animation: float 30s ease-in-out infinite reverse;
-      animation-delay: 2s;
-    }
-    
-    &.shape-3 {
-      width: 180px;
-      height: 180px;
-      top: 30%;
-      right: 10%;
-      animation: float 20s ease-in-out infinite;
+      width: min(150px, 25vw);
+      height: min(150px, 25vw);
+      bottom: 15%;
+      right: 8%;
+      animation: float 10s ease-in-out infinite reverse;
       animation-delay: 1s;
-    }
-    
-    &.shape-4 {
-      width: 140px;
-      height: 140px;
-      bottom: 25%;
-      left: 15%;
-      animation: float 25s ease-in-out infinite reverse;
-      animation-delay: 3s;
     }
   }
 }
@@ -236,179 +188,244 @@ $spacing-xl: 40px;
   position: relative;
   z-index: 10;
   width: 100%;
-  max-width: 500px;
+  max-width: min(480px, 95vw);
   margin: 0 auto;
-  animation: fadeInUp 0.8s ease-out;
   
-  @media (max-width: 768px) {
-    max-width: 90%;
+  animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 }
 
 .register-card {
-  @include glass-effect(0.98, 35px);
+  @include glass-effect;
   border-radius: $border-radius;
-  padding: $spacing-xl;
-  box-shadow: $shadow-extra;
-  transition: $transition-smooth;
+  padding: $spacing-lg;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 8px 24px rgba(74, 20, 140, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  
+  @media (prefers-color-scheme: dark) {
+    box-shadow: 
+      0 20px 40px rgba(0, 0, 0, 0.4),
+      0 8px 24px rgba(106, 27, 154, 0.2);
+  }
+  
+  @media (max-width: 768px) {
+    padding: $spacing-md;
+    border-radius: 20px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: $spacing-sm;
+    border-radius: 16px;
+  }
+  
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  
+  &:hover {
+    transform: translateY(-4px) translateZ(0);
+    box-shadow: 
+      0 25px 50px rgba(0, 0, 0, 0.2),
+      0 12px 30px rgba(74, 20, 140, 0.15);
+  }
   
   &::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    @include shimmer-effect;
-    transition: left 1.5s ease;
-    z-index: 1;
-  }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
     left: 0;
     right: 0;
-    height: 6px;
+    height: 4px;
     background: linear-gradient(90deg, $royal-purple, $vibrant-purple, $soft-purple);
-    border-radius: 6px 6px 0 0;
-    z-index: 2;
+    border-radius: 4px 4px 0 0;
+    background-size: 200% 100%;
+    animation: gradientShift 3s ease infinite;
   }
-  
-  &:hover {
-    transform: translateY(-8px);
-    box-shadow: $shadow-extra;
-    
-    &::before {
-      left: 100%;
-    }
-  }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .register-header {
   text-align: center;
-  margin-bottom: $spacing-xl;
-  position: relative;
-  animation: slideInFromTop 0.6s ease-out;
+  margin-bottom: $spacing-lg;
   
   .logo {
-    width: 110px;
-    height: 110px;
-    margin: 0 auto $spacing-lg;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto $spacing-md;
     position: relative;
+    
+    @media (max-width: 480px) {
+      width: 70px;
+      height: 70px;
+      margin-bottom: $spacing-sm;
+    }
     
     .logo-inner {
       width: 100%;
       height: 100%;
-      @include perfect-center;
-      background: linear-gradient(135deg, $royal-purple 0%, $vibrant-purple 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, $royal-purple, $vibrant-purple);
       border-radius: 50%;
       color: $white;
-      font-size: 2.8rem;
+      font-size: 2rem;
       box-shadow: 
-        0 10px 30px rgba(106, 27, 154, 0.4),
-        inset 0 0 20px rgba(255, 255, 255, 0.3);
+        0 8px 20px rgba(106, 27, 154, 0.4),
+        inset 0 0 15px rgba(255, 255, 255, 0.2);
       position: relative;
       z-index: 2;
-      animation: pulse-glow 4s ease-in-out infinite;
-      transition: $transition-smooth;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateZ(0);
+      
+      @media (max-width: 480px) {
+        font-size: 1.8rem;
+      }
       
       &:hover {
-        transform: scale(1.08) rotate(8deg);
+        transform: scale(1.05) rotate(5deg) translateZ(0);
         box-shadow: 
-          0 15px 40px rgba(106, 27, 154, 0.5),
-          inset 0 0 25px rgba(255, 255, 255, 0.4);
+          0 12px 25px rgba(106, 27, 154, 0.5),
+          inset 0 0 20px rgba(255, 255, 255, 0.3);
       }
     }
     
     .logo-glow {
       position: absolute;
-      top: -10px;
-      left: -10px;
-      right: -10px;
-      bottom: -10px;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
       background: linear-gradient(135deg, $royal-purple, $vibrant-purple);
       border-radius: 50%;
-      filter: blur(15px);
-      opacity: 0.6;
+      filter: blur(8px);
+      opacity: 0.4;
       z-index: 1;
-      animation: pulse-glow 4s ease-in-out infinite;
+      animation: pulseGlow 4s ease-in-out infinite;
+      
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
+    }
+  }
+  
+  @keyframes pulseGlow {
+    0%, 100% { 
+      opacity: 0.4;
+      transform: scale(1);
+    }
+    50% { 
+      opacity: 0.6;
+      transform: scale(1.05);
     }
   }
   
   h1 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin-bottom: $spacing-xs;
-    letter-spacing: -0.5px;
-    position: relative;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: clamp(1.8rem, 4vw, 2.2rem);
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: $dark-text;
+    background: linear-gradient(135deg, $royal-purple, $vibrant-purple);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    @media (prefers-color-scheme: dark) {
+      color: $dark-text-primary;
+    }
     
     &::after {
       content: '';
-      position: absolute;
-      bottom: -$spacing-xs;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
+      display: block;
+      width: 60px;
+      height: 3px;
       background: linear-gradient(90deg, $royal-purple, $vibrant-purple);
+      margin: 8px auto 0;
       border-radius: 2px;
-      transition: width 0.4s ease;
+      transition: width 0.3s ease;
     }
     
     &:hover::after {
-      width: 120px;
+      width: 80px;
     }
   }
   
   p {
     color: $medium-text;
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin-top: $spacing-md;
-    line-height: 1.6;
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    margin-top: $spacing-sm;
+    line-height: 1.5;
+    
+    @media (prefers-color-scheme: dark) {
+      color: $dark-text-secondary;
+    }
   }
 }
 
 .register-form {
   .form-group {
-    margin-bottom: $spacing-lg;
+    margin-bottom: $spacing-md;
     position: relative;
-    width: 100%;
     
     .input-container {
       position: relative;
-      width: 100%;
       
       .input-icon {
         position: absolute;
-        left: 20px;
+        left: 16px;
         top: 50%;
         transform: translateY(-50%);
         color: $vibrant-purple;
-        font-size: 1.3rem;
-        z-index: 3;
-        transition: $transition-smooth;
+        font-size: 1.2rem;
+        z-index: 2;
         pointer-events: none;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        
+        @media (prefers-color-scheme: dark) {
+          color: $soft-purple;
+        }
+        
+        @media (max-width: 480px) {
+          left: 14px;
+          font-size: 1.1rem;
+        }
       }
       
       input {
         width: 100%;
-        padding: 20px 20px 20px 60px;
+        box-sizing: border-box;
+        padding: 16px 16px 16px 48px;
         border: 2px solid rgba(142, 36, 170, 0.15);
-        background: rgba(255, 255, 255, 0.97);
+        background: rgba(255, 255, 255, 0.95);
         border-radius: $border-radius-sm;
-        font-size: 1.05rem;
+        font-size: 1rem;
         color: $dark-text;
-        transition: $transition-smooth;
+        transition: $transition-base;
         font-weight: 500;
-        line-height: 1.6;
-        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
+        line-height: 1.5;
+        transform: translateZ(0);
+        
+        @media (prefers-color-scheme: dark) {
+          background: rgba($dark-card, 0.8);
+          border-color: rgba(255, 255, 255, 0.15);
+          color: $dark-text-primary;
+        }
+        
+        @media (max-width: 480px) {
+          padding: 14px 14px 14px 44px;
+          font-size: 16px;
+        }
         
         &::placeholder {
           color: transparent;
@@ -416,206 +433,277 @@ $spacing-xl: 40px;
         
         &.error {
           border-color: rgba(220, 53, 69, 0.6);
-          box-shadow: inset 0 2px 6px rgba(220, 53, 69, 0.1);
+          background: rgba(255, 255, 255, 0.98);
+          animation: inputError 0.4s ease-out;
+          
+          @media (prefers-color-scheme: dark) {
+            border-color: rgba(239, 68, 68, 0.6);
+          }
+          
+          + .input-icon {
+            color: #dc3545;
+            animation: iconError 0.4s ease-out;
+          }
         }
         
         &:focus {
           @include focus-ring;
-          background: $white;
-          transform: translateY(-3px);
           border-color: $vibrant-purple;
+          background: $white;
+          transform: translateY(-2px) translateZ(0);
           box-shadow: 
-            inset 0 2px 8px rgba(142, 36, 170, 0.15),
-            0 5px 20px rgba(142, 36, 170, 0.2);
+            0 8px 20px rgba(142, 36, 170, 0.15),
+            0 4px 12px rgba(142, 36, 170, 0.1);
+          
+          @media (prefers-color-scheme: dark) {
+            background: rgba($dark-card, 0.9);
+            border-color: $soft-purple;
+          }
           
           + .input-icon {
             color: $deep-purple;
-            transform: translateY(-50%) scale(1.25);
-          }
-          
-          ~ .input-underline {
-            width: 100%;
+            transform: translateY(-50%) scale(1.1);
+            
+            @media (prefers-color-scheme: dark) {
+              color: $light-purple;
+            }
           }
           
           ~ label {
-            top: -22px;
+            top: -18px;
             left: 0;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: $vibrant-purple;
-            font-weight: 700;
-            background: linear-gradient(transparent 50%, rgba(255, 255, 255, 0.98) 50%);
-            padding: 0 10px;
+            font-weight: 600;
+            background: linear-gradient(transparent 50%, rgba(255, 255, 255, 0.95) 50%);
+            padding: 0 8px;
+            transform: translateY(0);
+            
+            @media (prefers-color-scheme: dark) {
+              background: linear-gradient(transparent 50%, $dark-card 50%);
+              color: $soft-purple;
+            }
           }
         }
         
         &:not(:placeholder-shown) ~ label {
-          top: -22px;
+          top: -18px;
           left: 0;
-          font-size: 0.9rem;
+          font-size: 0.85rem;
           color: $vibrant-purple;
-          font-weight: 700;
-          background: linear-gradient(transparent 50%, rgba(255, 255, 255, 0.98) 50%);
-          padding: 0 10px;
+          font-weight: 600;
+          background: linear-gradient(transparent 50%, rgba(255, 255, 255, 0.95) 50%);
+          padding: 0 8px;
+          transform: translateY(0);
+          
+          @media (prefers-color-scheme: dark) {
+            background: linear-gradient(transparent 50%, $dark-card 50%);
+            color: $soft-purple;
+          }
         }
       }
       
       label {
         position: absolute;
-        top: 20px;
-        left: 60px;
-        font-size: 1.05rem;
+        top: 50%;
+        left: 48px;
+        transform: translateY(-50%);
+        font-size: 1rem;
         color: $light-text;
-        transition: $transition-smooth;
+        transition: $transition-base;
         pointer-events: none;
         font-weight: 500;
-        padding: 0 8px;
-        margin-left: -8px;
+        padding: 0 6px;
+        margin-left: -6px;
         z-index: 2;
-      }
-      
-      .input-underline {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 0;
-        height: 3px;
-        background: linear-gradient(90deg, $royal-purple, $vibrant-purple);
-        border-radius: 0 0 3px 3px;
-        transition: $transition-smooth;
-        z-index: 3;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: calc(100% - 70px);
+        
+        @media (prefers-color-scheme: dark) {
+          color: $dark-text-secondary;
+        }
+        
+        @media (max-width: 480px) {
+          left: 44px;
+          font-size: 0.95rem;
+          max-width: calc(100% - 60px);
+        }
       }
       
       .password-toggle {
         position: absolute;
-        right: 20px;
+        right: 12px;
         top: 50%;
         transform: translateY(-50%);
         color: $light-text;
         cursor: pointer;
-        transition: $transition-smooth;
-        z-index: 4;
+        transition: $transition-base;
+        z-index: 3;
         background: none;
         border: none;
-        padding: 10px;
+        padding: 8px;
         border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: translateZ(0);
+        
+        @media (prefers-color-scheme: dark) {
+          color: $dark-text-secondary;
+        }
         
         &:hover {
           color: $vibrant-purple;
-          background: rgba(142, 36, 170, 0.1);
-          transform: translateY(-50%) scale(1.15);
+          background: rgba(142, 36, 170, 0.12);
+          transform: translateY(-50%) scale(1.1) translateZ(0);
+          
+          @media (prefers-color-scheme: dark) {
+            color: $soft-purple;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          right: 10px;
+          padding: 6px;
         }
       }
     }
     
     .error {
       color: #dc3545;
-      font-size: 0.9rem;
-      margin-top: 10px;
+      font-size: 0.85rem;
+      margin-top: 6px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       font-weight: 500;
+      animation: slideDown 0.3s ease-out;
+      
+      @media (prefers-color-scheme: dark) {
+        color: #f87171;
+      }
+      
+      @media (max-width: 480px) {
+        font-size: 0.8rem;
+        gap: 4px;
+      }
       
       &.main-error {
         text-align: center;
         margin-top: $spacing-md;
-        padding: 14px;
-        background: rgba(220, 53, 69, 0.1);
+        padding: 12px;
+        background: rgba(220, 53, 69, 0.08);
         border-radius: $border-radius-xs;
-        border-left: 4px solid #dc3545;
+        border-left: 3px solid #dc3545;
         font-weight: 600;
+        backdrop-filter: blur(8px);
+        
+        @media (prefers-color-scheme: dark) {
+          background: rgba(239, 68, 68, 0.12);
+        }
+        
+        @media (max-width: 480px) {
+          padding: 10px;
+          margin-top: $spacing-sm;
+        }
       }
       
       &::before {
         content: '⚠';
-        font-size: 1.1rem;
+        font-size: 0.9rem;
       }
     }
   }
 }
 
+@keyframes inputError {
+  0%, 100% { transform: translateX(0) translateZ(0); }
+  25% { transform: translateX(-4px) translateZ(0); }
+  75% { transform: translateX(4px) translateZ(0); }
+}
+
+@keyframes iconError {
+  0%, 100% { transform: translateY(-50%); }
+  25% { transform: translateY(-50%) rotate(-5deg); }
+  75% { transform: translateY(-50%) rotate(5deg); }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .register-button {
   width: 100%;
-  padding: 20px 28px;
-  background: linear-gradient(135deg, $royal-purple 0%, $vibrant-purple 100%);
+  padding: 16px 24px;
+  background: linear-gradient(135deg, $royal-purple, $vibrant-purple);
   color: $white;
   border: none;
   border-radius: $border-radius-sm;
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: $transition-smooth;
+  transition: $transition-base;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: $spacing-md;
+  box-shadow: 0 4px 12px rgba(106, 27, 154, 0.3);
   position: relative;
   overflow: hidden;
-  @include perfect-center;
-  gap: 12px;
-  margin-top: $spacing-md;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  box-shadow: 0 8px 25px rgba(106, 27, 154, 0.4);
+  transform: translateZ(0);
   
-  .button-text {
-    position: relative;
-    z-index: 3;
+  @media (prefers-color-scheme: dark) {
+    box-shadow: 0 4px 12px rgba(106, 27, 154, 0.4);
+  }
+  
+  @media (max-width: 480px) {
+    padding: 14px 20px;
+    font-size: 0.95rem;
   }
   
   .button-icon {
-    position: relative;
-    z-index: 3;
-    transition: $transition-smooth;
-    font-size: 1.2rem;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.3),
-      transparent
-    );
-    transition: left 0.8s ease;
-    z-index: 1;
-  }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, $deep-purple 0%, $royal-purple 100%);
-    opacity: 0;
-    transition: $transition-smooth;
-    z-index: 2;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
   }
   
   &:hover:not(:disabled) {
-    transform: translateY(-4px);
-    box-shadow: 0 15px 35px rgba(106, 27, 154, 0.5);
-    
-    &::before {
-      left: 100%;
-    }
-    
-    &::after {
-      opacity: 1;
-    }
+    transform: translateY(-3px) translateZ(0);
+    box-shadow: 0 8px 20px rgba(106, 27, 154, 0.4);
     
     .button-icon {
-      transform: translateX(6px);
+      transform: translateX(4px);
+    }
+    
+    &::before {
+      width: 300px;
+      height: 300px;
     }
   }
   
   &:active:not(:disabled) {
-    transform: translateY(0);
-    box-shadow: 0 8px 20px rgba(106, 27, 154, 0.4);
+    transform: translateY(-1px) translateZ(0);
   }
   
   &:disabled {
@@ -624,53 +712,65 @@ $spacing-xl: 40px;
     transform: none;
     box-shadow: none;
     
-    &:hover {
-      &::before {
-        left: -100%;
-      }
-      
-      .button-icon {
-        transform: none;
-      }
+    @media (prefers-color-scheme: dark) {
+      background: #4a5568;
     }
   }
 }
 
 .login-link {
   text-align: center;
-  margin-top: $spacing-xl;
-  padding-top: $spacing-lg;
+  margin-top: $spacing-lg;
+  padding-top: $spacing-md;
   border-top: 1px solid rgba(142, 36, 170, 0.1);
+  
+  @media (prefers-color-scheme: dark) {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  @media (max-width: 480px) {
+    margin-top: $spacing-md;
+    padding-top: $spacing-sm;
+  }
   
   p {
     color: $medium-text;
-    font-size: 1rem;
+    font-size: 0.95rem;
     margin: 0;
-    font-weight: 500;
+    
+    @media (prefers-color-scheme: dark) {
+      color: $dark-text-secondary;
+    }
   }
   
   .login-btn {
     color: $vibrant-purple;
     text-decoration: none;
-    font-weight: 700;
-    transition: $transition-smooth;
+    font-weight: 600;
+    transition: color 0.3s ease;
     position: relative;
-    padding: 2px 0;
+    
+    @media (prefers-color-scheme: dark) {
+      color: $soft-purple;
+    }
     
     &::after {
       content: '';
       position: absolute;
-      bottom: 0;
+      bottom: -2px;
       left: 0;
       width: 0;
       height: 2px;
-      background: linear-gradient(90deg, $vibrant-purple, $deep-purple);
+      background: currentColor;
       transition: width 0.3s ease;
-      border-radius: 1px;
     }
     
     &:hover {
       color: $deep-purple;
+      
+      @media (prefers-color-scheme: dark) {
+        color: $light-purple;
+      }
       
       &::after {
         width: 100%;
@@ -681,118 +781,40 @@ $spacing-xl: 40px;
 
 .home-link {
   text-align: center;
-  margin-top: $spacing-lg;
+  margin-top: $spacing-md;
   
   .home-btn {
     color: $medium-text;
     text-decoration: none;
-    font-weight: 600;
-    transition: $transition-smooth;
+    font-weight: 500;
+    transition: $transition-base;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 16px;
+    gap: 8px;
+    padding: 8px 12px;
     border-radius: $border-radius-xs;
+    transform: translateZ(0);
+    
+    @media (prefers-color-scheme: dark) {
+      color: $dark-text-secondary;
+    }
+    
+    @media (max-width: 480px) {
+      padding: 6px 10px;
+      font-size: 0.9rem;
+    }
     
     &:hover {
       color: $vibrant-purple;
-      background: rgba(142, 36, 170, 0.1);
-      transform: translateX(-5px);
-    }
-  }
-}
-
-
-@media (max-width: 768px) {
-  .register-page {
-    padding: $spacing-xs;
-  }
-  
-  .register-card {
-    padding: $spacing-lg;
-    border-radius: 24px;
-  }
-  
-  .register-header {
-    .logo {
-      width: 95px;
-      height: 95px;
+      background: rgba(142, 36, 170, 0.08);
+      transform: translateX(-3px) translateZ(0);
       
-      .logo-inner {
-        font-size: 2.4rem;
+      @media (prefers-color-scheme: dark) {
+        color: $soft-purple;
       }
-    }
-    
-    h1 {
-      font-size: 2.2rem;
-    }
-    
-    p {
-      font-size: 1.1rem;
     }
   }
 }
-
-@media (max-width: 576px) {
-  .register-card {
-    padding: $spacing-md;
-    border-radius: 20px;
-  }
-  
-  .register-header {
-    .logo {
-      width: 85px;
-      height: 85px;
-      margin-bottom: $spacing-md;
-      
-      .logo-inner {
-        font-size: 2.2rem;
-      }
-    }
-    
-    h1 {
-      font-size: 2rem;
-    }
-    
-    p {
-      font-size: 1rem;
-    }
-  }
-  
-  .register-form {
-    .form-group {
-      .input-container {
-        input {
-          padding: 18px 18px 18px 55px;
-          font-size: 1rem;
-        }
-        
-        .input-icon {
-          left: 18px;
-          font-size: 1.2rem;
-        }
-        
-        label {
-          left: 55px;
-          font-size: 1rem;
-        }
-      }
-    }
-  }
-  
-  .register-button {
-    padding: 18px 24px;
-    font-size: 1rem;
-  }
-  
-  .home-link {
-    .home-btn {
-      padding: 8px 14px;
-      font-size: 0.9rem;
-    }
-  }
-}
-
 
 .sr-only {
   position: absolute;
@@ -814,60 +836,53 @@ $spacing-xl: 40px;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .register-card {
-    @include glass-effect(0.92, 25px);
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-  
-  input {
-    background: rgba(255, 255, 255, 0.12) !important;
-    color: $white !important;
-    border-color: rgba(255, 255, 255, 0.25) !important;
-  }
-  
-  label {
-    background: linear-gradient(transparent 50%, $deep-purple 50%) !important;
-  }
-}
-
 *:focus-visible {
-  outline: 2px solid $vibrant-purple;
-  outline-offset: 3px;
+  @include focus-ring;
 }
 
-.will-change {
-  will-change: transform, opacity;
-}
 
-@media (max-width: 360px) {
+@supports not (backdrop-filter: blur(10px)) {
   .register-card {
-    padding: $spacing-sm;
+    background: rgba(255, 255, 255, 0.98);
+    
+    @media (prefers-color-scheme: dark) {
+      background: rgba($dark-card, 0.98);
+    }
+  }
+}
+
+
+@supports (-webkit-touch-callout: none) {
+  .register-page {
+    min-height: -webkit-fill-available;
   }
   
-  .register-header {
-    h1 {
-      font-size: 1.8rem;
+  input, button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+
+@media (max-width: 320px) {
+  .register-card {
+    padding: 12px;
+  }
+  
+  .register-header .logo {
+    width: 60px;
+    height: 60px;
+    
+    .logo-inner {
+      font-size: 1.6rem;
     }
   }
   
-  .register-form {
-    .form-group {
-      .input-container {
-        input {
-          padding: 16px 16px 16px 50px;
-        }
-        
-        .input-icon {
-          left: 16px;
-          font-size: 1.1rem;
-        }
-        
-        label {
-          left: 50px;
-          font-size: 0.95rem;
-        }
-      }
-    }
+  .register-form .form-group .input-container input {
+    padding: 12px 12px 12px 40px;
+  }
+  
+  .register-form .form-group .input-container label {
+    left: 40px;
+    font-size: 0.9rem;
   }
 }

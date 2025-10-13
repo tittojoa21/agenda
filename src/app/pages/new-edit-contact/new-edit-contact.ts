@@ -3,12 +3,11 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ContactsService } from '../../services/contacts-service';
 import { Router } from '@angular/router';
 import { Contact, NewContact } from '../../interfaces/contacto';
-import { Spinner } from '../../components/spinner/spinner';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-new-edit-contact',
-  imports: [FormsModule, Spinner, CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './new-edit-contact.html',
   styleUrl: './new-edit-contact.scss'
 })
@@ -38,11 +37,14 @@ export class NewEditContact implements OnInit {
               email: contacto.email || '',
               firstName: contacto.firstName,
               image: contacto.image || '',
-              isFavourite: contacto.isFavorite || false,
               lastName: contacto.lastName || '',
-              number: contacto.number
+              number: contacto.number,
+              description: contacto.description || ''
             });
           });
+        } else {
+          this.errorEnBack.set(true);
+          this.errorMessage.set('Contacto no encontrado');
         }
       } catch (error) {
         this.errorEnBack.set(true);
@@ -60,26 +62,38 @@ export class NewEditContact implements OnInit {
     this.errorMessage.set('');
 
     const nuevoContacto: NewContact = {
-      firstName: form.value.firstName.trim(),
+      firstName: form.value.firstName?.trim() || '',
       lastName: form.value.lastName?.trim() || '',
       address: form.value.address?.trim() || '',
       email: form.value.email?.trim() || '',
       image: form.value.image?.trim() || '',
-      number: form.value.number,
+      number: form.value.number?.trim() || '',
       company: form.value.company?.trim() || '',
       description: form.value.description?.trim() || '',
-      isFavorite: form.value.isFavourite || false
+      isFavorite: false
     };
+
+    if (!nuevoContacto.firstName || !nuevoContacto.number) {
+      this.errorEnBack.set(true);
+      this.errorMessage.set('Nombre y teléfono son campos obligatorios');
+      return;
+    }
 
     this.solicitudABackEnCurso.set(true);
 
     try {
       let res;
       if (this.idContacto()) {
-        res = await this.contactsService.editContact({ 
-          ...nuevoContacto, 
-          id: this.contactoBack()!.id 
-        });
+        const contactToUpdate: Contact = {
+          ...nuevoContacto,
+          id: this.contactoBack()!.id
+        };
+        res = await this.contactsService.editContact(contactToUpdate);
+        
+        if (!res) {
+          console.warn('El servidor no devolvió el contacto actualizado, usando datos locales');
+          res = contactToUpdate;
+        }
       } else {
         res = await this.contactsService.createContact(nuevoContacto);
       }
@@ -92,7 +106,8 @@ export class NewEditContact implements OnInit {
         return;
       }
 
-      this.router.navigate(["/contacts", res.id]);
+      const contactId = res.id || this.idContacto();
+      this.router.navigate(["/contacts", contactId]);
       
     } catch (error) {
       this.solicitudABackEnCurso.set(false);
@@ -114,6 +129,8 @@ export class NewEditContact implements OnInit {
           states[fieldName] = `Máximo ${field.errors['maxlength'].requiredLength} caracteres`;
         } else if (field.errors?.['email']) {
           states[fieldName] = 'Formato de email inválido';
+        } else {
+          states[fieldName] = 'Campo inválido';
         }
       } else {
         states[fieldName] = '';
@@ -124,10 +141,9 @@ export class NewEditContact implements OnInit {
   }
 
   getFieldClass(field: any): string {
-    if (!field.dirty && !field.touched) return '';
-    return field.invalid ? 'error' : 'valid';
+    if (!field?.dirty && !field?.touched) return '';
+    return field?.invalid ? 'error' : 'valid';
   }
-
 
   cancel(): void {
     if (this.idContacto()) {

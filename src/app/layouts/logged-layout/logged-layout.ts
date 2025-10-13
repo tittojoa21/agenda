@@ -3,7 +3,7 @@ import { RouterModule, RouterOutlet, NavigationEnd, Router } from '@angular/rout
 import { CommonModule } from '@angular/common';
 import { Auth } from '../../services/auth';
 import { ContactsService } from '../../services/contacts-service';
-import Swal from 'sweetalert2';
+import { ModalHelpers } from '../../utils/modals';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -14,10 +14,6 @@ import { Subject } from 'rxjs';
   styleUrl: './logged-layout.scss'
 })
 export class LoggedLayoutComponent implements OnInit, OnDestroy {
-  ngOnInit(): void {
-    this.contactsCount = this.contactsService.contacts.length;
-    this.setupRouteTracking();
-  }
   private destroy$ = new Subject<void>();
   
   authService = inject(Auth);
@@ -28,13 +24,16 @@ export class LoggedLayoutComponent implements OnInit, OnDestroy {
   currentRoute = '';
   isMobileMenuOpen = false;
 
+  ngOnInit(): void {
+    this.contactsCount = this.contactsService.contacts.length;
+    this.setupRouteTracking();
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
- 
   private setupRouteTracking(): void {
     this.router.events
       .pipe(
@@ -43,44 +42,19 @@ export class LoggedLayoutComponent implements OnInit, OnDestroy {
       )
       .subscribe((event: NavigationEnd) => {
         this.currentRoute = event.urlAfterRedirects;
-        this.isMobileMenuOpen = false; 
+        this.isMobileMenuOpen = false;
       });
   }
 
-  showLogoutModal(): void {
-    Swal.fire({
-      title: '¿Estás seguro de cerrar sesión?',
-      text: 'Serás redirigido a la página de inicio de sesión',
-      icon: 'question',
-      iconColor: '#7E57C2',
-      showCancelButton: true,
-      confirmButtonColor: '#ef4444',
-      cancelButtonColor: '#6b7280',
-      confirmButtonText: 'Sí, cerrar sesión',
-      cancelButtonText: 'Cancelar',
-      reverseButtons: true,
-      backdrop: true,
-      background: '#1f2937',
-      color: '#f9fafb',
-      customClass: {
-        popup: 'logout-modal',
-        confirmButton: 'logout-confirm-btn',
-        cancelButton: 'logout-cancel-btn',
-        title: 'logout-title'
-      },
-      showClass: {
-        popup: 'swal2-noanimation',
-        backdrop: 'swal2-noanimation'
-      },
-      hideClass: {
-        popup: '',
-        backdrop: ''
-      }
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.performLogout();
-      }
-    });
+  async showLogoutModal(): Promise<void> {
+    const result = await ModalHelpers.confirmAction(
+      '¿Estás seguro de cerrar sesión?',
+      'Serás redirigido a la página de inicio de sesión'
+    );
+
+    if (result) {
+      this.performLogout();
+    }
   }
 
   private performLogout(): void {

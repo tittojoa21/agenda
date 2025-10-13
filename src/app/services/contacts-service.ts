@@ -9,9 +9,7 @@ export class ContactsService {
   authService = inject(Auth);
   readonly URL_BASE = "https://agenda-api.somee.com/api/contacts";
 
-
   contacts: Contact[] = [];
-
 
   async getContacts(): Promise<Contact[]> {
     try {
@@ -35,15 +33,12 @@ export class ContactsService {
     }
   }
 
- 
   async getContactById(id: string | number): Promise<Contact | null> {
     try {
-      
       const localContact = this.contacts.find(contact => contact.id.toString() === id.toString());
       if (localContact) {
         return localContact;
       }
-
 
       const res = await fetch(`${this.URL_BASE}/${id}`, {
         method: "GET",
@@ -88,7 +83,6 @@ export class ContactsService {
     }
   }
 
-
   async deleteContact(id: string | number): Promise<boolean> {
     try {
       const res = await fetch(`${this.URL_BASE}/${id}`, {
@@ -102,7 +96,6 @@ export class ContactsService {
         return false;
       }
 
-      
       this.contacts = this.contacts.filter(contact => contact.id.toString() !== id.toString());
       return true;
     } catch (error) {
@@ -123,7 +116,22 @@ export class ContactsService {
       });
 
       if (!res.ok) {
+        console.error(`HTTP Error ${res.status}: ${res.statusText}`);
         return null;
+      }
+
+      const contentLength = res.headers.get('content-length');
+      const contentType = res.headers.get('content-type');
+      
+      if (contentLength === '0' || !contentType?.includes('application/json')) {
+        console.log('Respuesta vacía o no JSON, actualizando localmente');
+        this.contacts = this.contacts.map(oldContact => {
+          if (oldContact.id.toString() === contact.id.toString()) {
+            return contact;
+          }
+          return oldContact;
+        });
+        return contact;
       }
 
       const updatedContact: Contact = await res.json();
@@ -138,7 +146,15 @@ export class ContactsService {
       return updatedContact;
     } catch (error) {
       console.error(`Error updating contact ${contact.id}:`, error);
-      return null;
+      
+      this.contacts = this.contacts.map(oldContact => {
+        if (oldContact.id.toString() === contact.id.toString()) {
+          return contact;
+        }
+        return oldContact;
+      });
+      
+      return contact;
     }
   }
 
@@ -169,7 +185,6 @@ export class ContactsService {
     }
   }
 
-
   searchContacts(searchTerm: string): Contact[] {
     if (!searchTerm.trim()) {
       return this.contacts;
@@ -186,11 +201,9 @@ export class ContactsService {
     );
   }
 
-
   getFavoriteContacts(): Contact[] {
     return this.contacts.filter(contact => contact.isFavorite);
   }
-
 
   getStats() {
     return {
@@ -202,7 +215,6 @@ export class ContactsService {
   async editContact(contact: Contact): Promise<Contact | null> {
     return this.updateContact(contact);
   }
-
 
   async toggleFavorite(id: string | number): Promise<boolean> {
     return this.setFavourite(id);

@@ -15,11 +15,73 @@ $border-radius-sm: 8px;
 $shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
 
+$dark-bg: #0f0f23;
+$dark-surface: #1a1a2e;
+$dark-card: #24243a;
+$dark-text-primary: #f8fafc;
+$dark-text-secondary: #e2e8f0;
+$dark-text-tertiary: #94a3b8;
+$dark-border: #334155;
+
 .contact-details-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
   padding: 20px;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  transition: all 0.3s ease;
+
+  @media (prefers-color-scheme: dark) {
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+    color: $dark-text-primary;
+  }
+}
+
+@mixin dark-mode {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+@mixin theme-card {
+  background: $white;
+  box-shadow: $shadow;
+  
+  @include dark-mode {
+    background: $dark-card;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@mixin theme-text-primary {
+  color: $dark-text;
+  
+  @include dark-mode {
+    color: $dark-text-primary;
+  }
+}
+
+@mixin theme-text-secondary {
+  color: $medium-text;
+  
+  @include dark-mode {
+    color: $dark-text-secondary;
+  }
+}
+
+@mixin theme-background {
+  background: #f8f9fa;
+  
+  @include dark-mode {
+    background: lighten($dark-surface, 5%);
+  }
+}
+
+@mixin theme-border {
+  border-color: rgba(0, 0, 0, 0.1);
+  
+  @include dark-mode {
+    border-color: $dark-border;
+  }
 }
 
 .loading-state {
@@ -41,7 +103,7 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   }
   
   p {
-    color: $medium-text;
+    @include theme-text-secondary;
     font-size: 16px;
   }
 }
@@ -69,13 +131,13 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
     }
     
     h3 {
-      color: $dark-text;
+      @include theme-text-primary;
       margin-bottom: 10px;
       font-size: 1.5rem;
     }
     
     p {
-      color: $medium-text;
+      @include theme-text-secondary;
       margin-bottom: 25px;
       line-height: 1.5;
     }
@@ -92,6 +154,7 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
 .contact-details {
   max-width: 800px;
   margin: 0 auto;
+  animation: fadeIn 0.5s ease-out;
 }
 
 .contact-header {
@@ -100,11 +163,21 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   align-items: center;
   margin-bottom: 30px;
   
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 15px;
+  }
+  
   .back-btn {
-    background: $white;
+    @include theme-card;
     border: 2px solid $primary-light;
     color: $primary-color;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border-radius: $border-radius-sm;
     font-weight: 600;
     cursor: pointer;
@@ -112,20 +185,38 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
     align-items: center;
     gap: 8px;
     transition: all 0.3s ease;
+    text-decoration: none;
+    
+    @include dark-mode {
+      border-color: rgba($primary-light, 0.3);
+    }
     
     &:hover {
       background: $primary-light;
       transform: translateX(-5px);
+      
+      @include dark-mode {
+        background: rgba($primary-light, 0.2);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      align-self: stretch;
+      justify-content: center;
     }
   }
   
   .header-actions {
     display: flex;
-    gap: 10px;
+    gap: 12px;
+    
+    @media (max-width: 480px) {
+      gap: 8px;
+    }
     
     .btn-icon {
-      width: 45px;
-      height: 45px;
+      width: 48px;
+      height: 48px;
       border: none;
       border-radius: 50%;
       display: flex;
@@ -135,13 +226,26 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
       transition: all 0.3s ease;
       font-size: 16px;
       
+      @media (max-width: 480px) {
+        width: 44px;
+        height: 44px;
+      }
+      
       &.favorite-btn {
         background: rgba(255, 193, 7, 0.1);
         color: #ffd600;
         
+        @include dark-mode {
+          background: rgba(255, 193, 7, 0.15);
+        }
+        
         &.favorited {
           background: #ffd600;
           color: $white;
+          
+          @include dark-mode {
+            background: #ffd600;
+          }
         }
         
         &:hover {
@@ -154,6 +258,10 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
         background: rgba(33, 150, 243, 0.1);
         color: #2196f3;
         
+        @include dark-mode {
+          background: rgba(33, 150, 243, 0.15);
+        }
+        
         &:hover {
           transform: scale(1.1);
           box-shadow: $shadow;
@@ -163,6 +271,10 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
       &.delete-btn {
         background: rgba(244, 67, 54, 0.1);
         color: #f44336;
+        
+        @include dark-mode {
+          background: rgba(244, 67, 54, 0.15);
+        }
         
         &:hover {
           transform: scale(1.1);
@@ -174,13 +286,20 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
 .contact-card {
-  background: $white;
+  @include theme-card;
   padding: 30px;
   border-radius: $border-radius;
-  box-shadow: $shadow;
   text-align: center;
   margin-bottom: 30px;
   position: relative;
+  
+  @media (max-width: 768px) {
+    padding: 25px 20px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 20px 15px;
+  }
   
   .contact-avatar {
     position: relative;
@@ -193,6 +312,15 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
       border-radius: 50%;
       overflow: hidden;
       border: 4px solid $primary-light;
+      
+      @include dark-mode {
+        border-color: rgba($primary-light, 0.3);
+      }
+      
+      @media (max-width: 480px) {
+        width: 100px;
+        height: 100px;
+      }
       
       img {
         width: 100%;
@@ -220,6 +348,16 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
       border: 4px solid $primary-light;
       transition: all 0.3s ease;
       
+      @include dark-mode {
+        border-color: rgba($primary-light, 0.3);
+      }
+      
+      @media (max-width: 480px) {
+        width: 100px;
+        height: 100px;
+        font-size: 2rem;
+      }
+      
       &:hover {
         transform: scale(1.05);
         box-shadow: $shadow-hover;
@@ -240,6 +378,10 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
       color: #ccc;
       transition: all 0.3s ease;
       
+      @include dark-mode {
+        background: rgba($dark-card, 0.9);
+      }
+      
       &.active {
         color: #ffd600;
         background: rgba(255, 215, 0, 0.2);
@@ -253,10 +395,18 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   
   .contact-info {
     .contact-name {
-      color: $dark-text;
+      @include theme-text-primary;
       font-size: 2rem;
       font-weight: 700;
       margin-bottom: 5px;
+      
+      @media (max-width: 768px) {
+        font-size: 1.75rem;
+      }
+      
+      @media (max-width: 480px) {
+        font-size: 1.5rem;
+      }
     }
     
     .contact-title {
@@ -268,10 +418,14 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
       align-items: center;
       justify-content: center;
       gap: 8px;
+      
+      @media (max-width: 480px) {
+        font-size: 1.1rem;
+      }
     }
     
     .contact-description {
-      color: $medium-text;
+      @include theme-text-secondary;
       font-size: 1rem;
       line-height: 1.5;
       max-width: 400px;
@@ -296,6 +450,10 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
         gap: 5px;
         transition: all 0.3s ease;
         
+        @include dark-mode {
+          background: rgba($primary-light, 0.2);
+        }
+        
         &:hover {
           background: $primary-color;
           color: $white;
@@ -308,18 +466,23 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
 
 .tabs-navigation {
   display: flex;
-  background: $white;
+  @include theme-card;
   border-radius: $border-radius;
   padding: 5px;
   margin-bottom: 30px;
-  box-shadow: $shadow;
+  overflow: hidden;
+  
+  @media (max-width: 480px) {
+    flex-direction: column;
+    padding: 8px;
+  }
   
   .tab-btn {
     flex: 1;
     padding: 15px 20px;
     border: none;
     background: transparent;
-    color: $medium-text;
+    @include theme-text-secondary;
     font-weight: 600;
     cursor: pointer;
     border-radius: $border-radius-sm;
@@ -330,20 +493,24 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
     transition: all 0.3s ease;
     position: relative;
     
+    @media (max-width: 480px) {
+      padding: 12px 16px;
+      justify-content: flex-start;
+    }
+    
     &.active {
       background: linear-gradient(135deg, $primary-color, $accent-color);
       color: $white;
       box-shadow: $shadow;
-      
-      .tab-indicator {
-        opacity: 1;
-        transform: scaleX(1);
-      }
     }
     
     &:hover:not(.active) {
       color: $primary-color;
       background: rgba(126, 87, 194, 0.1);
+      
+      @include dark-mode {
+        background: rgba(126, 87, 194, 0.2);
+      }
     }
     
     .tab-indicator {
@@ -362,14 +529,21 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
 .tab-content {
-  background: $white;
+  @include theme-card;
   border-radius: $border-radius;
-  box-shadow: $shadow;
   overflow: hidden;
 }
 
 .tab-pane {
   padding: 30px;
+  
+  @media (max-width: 768px) {
+    padding: 25px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 20px;
+  }
 }
 
 .info-section {
@@ -380,7 +554,7 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   }
   
   .section-title {
-    color: $dark-text;
+    @include theme-text-primary;
     font-size: 1.3rem;
     margin-bottom: 20px;
     display: flex;
@@ -403,15 +577,25 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   align-items: center;
   gap: 15px;
   padding: 20px;
-  background: #f8f9fa;
+  @include theme-background;
   border-radius: $border-radius-sm;
   transition: all 0.3s ease;
   border-left: 4px solid transparent;
   
+  @media (max-width: 480px) {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+    padding: 16px;
+  }
+  
   &:hover {
-    background: #e9ecef;
     transform: translateX(5px);
     border-left-color: $primary-color;
+    
+    @media (max-width: 480px) {
+      transform: translateY(-2px);
+    }
   }
   
   .info-icon {
@@ -425,6 +609,16 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
     color: $primary-color;
     font-size: 18px;
     flex-shrink: 0;
+    
+    @include dark-mode {
+      background: rgba($primary-light, 0.2);
+    }
+    
+    @media (max-width: 480px) {
+      width: 44px;
+      height: 44px;
+      font-size: 16px;
+    }
   }
   
   .info-content {
@@ -434,14 +628,25 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
     justify-content: space-between;
     gap: 15px;
     
+    @media (max-width: 480px) {
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+    
     .info-text {
       flex: 1;
+      
+      @media (max-width: 480px) {
+        text-align: center;
+        width: 100%;
+      }
     }
     
     .info-label {
       display: block;
       font-size: 0.9rem;
-      color: $medium-text;
+      @include theme-text-secondary;
       margin-bottom: 5px;
       font-weight: 500;
     }
@@ -449,10 +654,11 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
     .info-value {
       display: block;
       font-size: 1.1rem;
-      color: $dark-text;
+      @include theme-text-primary;
       font-weight: 600;
       text-decoration: none;
       transition: color 0.3s ease;
+      word-break: break-word;
       
       &:hover {
         color: $primary-color;
@@ -462,28 +668,33 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
     .copy-btn {
       background: transparent;
       border: none;
-      color: $medium-text;
+      @include theme-text-secondary;
       cursor: pointer;
       padding: 8px;
       border-radius: $border-radius-sm;
       transition: all 0.3s ease;
+      flex-shrink: 0;
       
       &:hover {
         background: $primary-light;
         color: $primary-color;
+        
+        @include dark-mode {
+          background: rgba($primary-light, 0.2);
+        }
       }
     }
   }
 }
 
 .notes-content {
-  background: #f8f9fa;
+  @include theme-background;
   padding: 20px;
   border-radius: $border-radius-sm;
   border-left: 4px solid $primary-color;
   
   p {
-    color: $dark-text;
+    @include theme-text-primary;
     line-height: 1.6;
     margin: 0;
   }
@@ -492,7 +703,7 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
 .no-info, .no-activity {
   text-align: center;
   padding: 60px 20px;
-  color: $medium-text;
+  @include theme-text-secondary;
   
   i {
     font-size: 3rem;
@@ -501,7 +712,7 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   }
   
   h3 {
-    color: $dark-text;
+    @include theme-text-primary;
     margin-bottom: 10px;
   }
   
@@ -512,7 +723,7 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
 
 .activity-section {
   .section-title {
-    color: $dark-text;
+    @include theme-text-primary;
     font-size: 1.3rem;
     margin-bottom: 25px;
     display: flex;
@@ -536,13 +747,21 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   align-items: flex-start;
   gap: 15px;
   padding: 20px;
-  background: #f8f9fa;
+  @include theme-background;
   border-radius: $border-radius-sm;
   transition: all 0.3s ease;
   
+  @media (max-width: 480px) {
+    padding: 16px;
+    gap: 12px;
+  }
+  
   &:hover {
-    background: #e9ecef;
     transform: translateX(5px);
+    
+    @media (max-width: 480px) {
+      transform: translateY(-2px);
+    }
   }
   
   .activity-icon {
@@ -555,6 +774,12 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
     color: $white;
     font-size: 18px;
     flex-shrink: 0;
+    
+    @media (max-width: 480px) {
+      width: 44px;
+      height: 44px;
+      font-size: 16px;
+    }
     
     &.created {
       background: $success-color;
@@ -575,23 +800,30 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
     .activity-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       margin-bottom: 5px;
+      gap: 10px;
+      
+      @media (max-width: 480px) {
+        flex-direction: column;
+        gap: 5px;
+      }
       
       .activity-title {
         font-weight: 600;
-        color: $dark-text;
+        @include theme-text-primary;
         font-size: 1.1rem;
       }
       
       .activity-time {
         font-size: 0.9rem;
-        color: $medium-text;
+        @include theme-text-secondary;
+        white-space: nowrap;
       }
     }
     
     .activity-description {
-      color: $medium-text;
+      @include theme-text-secondary;
       line-height: 1.5;
       margin: 0;
     }
@@ -603,6 +835,11 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 15px;
   margin-top: 30px;
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
   
   .action-btn {
     padding: 15px 20px;
@@ -619,6 +856,11 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
     cursor: pointer;
     font-size: 0.95rem;
     
+    @media (max-width: 480px) {
+      padding: 12px 16px;
+      font-size: 0.9rem;
+    }
+    
     &.primary {
       background: linear-gradient(135deg, $primary-color, $accent-color);
       color: $white;
@@ -630,14 +872,22 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
     }
     
     &.secondary {
-      background: $white;
+      @include theme-card;
       color: $primary-color;
       border: 2px solid $primary-light;
+      
+      @include dark-mode {
+        border-color: rgba($primary-light, 0.3);
+      }
       
       &:hover {
         background: $primary-light;
         transform: translateY(-2px);
         box-shadow: $shadow;
+        
+        @include dark-mode {
+          background: rgba($primary-light, 0.2);
+        }
       }
     }
   }
@@ -659,10 +909,22 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   opacity: 0;
   transition: all 0.3s ease;
   z-index: 1000;
+  max-width: calc(100vw - 40px);
+  
+  @media (max-width: 768px) {
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    transform: translateY(100%);
+  }
   
   &.show {
     transform: translateX(0);
     opacity: 1;
+    
+    @media (max-width: 768px) {
+      transform: translateY(0);
+    }
   }
   
   i {
@@ -686,6 +948,11 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   gap: 8px;
   text-decoration: none;
   font-size: 0.95rem;
+  
+  @media (max-width: 480px) {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
 }
 
 .btn-primary {
@@ -709,123 +976,6 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   }
 }
 
-// Responsive Design
-@media (max-width: 768px) {
-  .contact-details-page {
-    padding: 15px;
-  }
-  
-  .contact-header {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
-    
-    .header-actions {
-      justify-content: center;
-    }
-  }
-  
-  .contact-card {
-    padding: 20px;
-    
-    .contact-name {
-      font-size: 1.5rem;
-    }
-    
-    .contact-avatar {
-      .avatar-image, .avatar-initials {
-        width: 100px;
-        height: 100px;
-      }
-      
-      .avatar-initials {
-        font-size: 2rem;
-      }
-    }
-  }
-  
-  .tabs-navigation {
-    flex-direction: column;
-    
-    .tab-btn {
-      justify-content: flex-start;
-    }
-  }
-  
-  .tab-pane {
-    padding: 20px;
-  }
-  
-  .quick-actions {
-    grid-template-columns: 1fr;
-  }
-  
-  .info-item {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
-    
-    .info-content {
-      flex-direction: column;
-      gap: 10px;
-    }
-  }
-  
-  .activity-item {
-    .activity-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 5px;
-    }
-  }
-  
-  .toast {
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    transform: translateY(100%);
-    
-    &.show {
-      transform: translateY(0);
-    }
-  }
-}
-
-@media (max-width: 480px) {
-  .contact-details-page {
-    padding: 10px;
-  }
-  
-  .contact-card {
-    padding: 15px;
-    
-    .contact-avatar {
-      .avatar-image, .avatar-initials {
-        width: 80px;
-        height: 80px;
-        font-size: 1.8rem;
-      }
-    }
-    
-    .contact-name {
-      font-size: 1.3rem;
-    }
-  }
-  
-  .info-item, .activity-item {
-    padding: 15px;
-  }
-  
-  .tab-pane {
-    padding: 15px;
-  }
-  
-  .quick-actions .action-btn {
-    padding: 12px 15px;
-    font-size: 0.9rem;
-  }
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -837,14 +987,14 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   }
 }
 
-.contact-details {
-  animation: fadeIn 0.5s ease-out;
-}
-
 .skeleton-loading {
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   animation: loading 1.5s infinite;
+  
+  @include dark-mode {
+    background: linear-gradient(90deg, $dark-border 25%, lighten($dark-border, 5%) 50%, $dark-border 75%);
+  }
 }
 
 @keyframes loading {
@@ -853,5 +1003,55 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   }
   100% {
     background-position: -200% 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-details-page {
+    padding: 15px;
+  }
+  
+  .contact-header {
+    .header-actions {
+      justify-content: center;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-details-page {
+    padding: 10px;
+  }
+  
+  .contact-card {
+    .contact-name {
+      font-size: 1.3rem;
+    }
+  }
+  
+  .info-item, .activity-item {
+    padding: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@include dark-mode {
+  .contact-card,
+  .tab-content,
+  .tabs-navigation {
+    border: 1px solid $dark-border;
+  }
+  
+  .info-item,
+  .activity-item,
+  .notes-content {
+    border: 1px solid rgba($dark-border, 0.5);
   }
 }

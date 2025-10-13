@@ -65,26 +65,6 @@
       </div>
     }
 
-    @if (variant() !== 'detailed' && hasContactInfo()) {
-      <div class="contact-badges">
-        @if (contacto().email) {
-          <span class="badge email-badge" title="Tiene email">
-            <i class="fas fa-envelope"></i>
-          </span>
-        }
-        @if (contacto().number) {
-          <span class="badge phone-badge" title="Tiene teléfono">
-            <i class="fas fa-phone"></i>
-          </span>
-        }
-        @if (contacto().company) {
-          <span class="badge company-badge" title="Tiene compañía">
-            <i class="fas fa-building"></i>
-          </span>
-        }
-      </div>
-    }
-
     @if (variant() === 'detailed' && contacto().description) {
       <p class="contact-description">{{ contacto().description }}</p>
     }

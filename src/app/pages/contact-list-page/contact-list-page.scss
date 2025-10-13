@@ -1,25 +1,83 @@
 $primary-color: #7E57C2;
-$primary-dark: #5E35B1;
 $primary-light: #D1C4E9;
-$secondary-color: #B39DDB;
-$accent-color: #9575CD;
 $white: #FFFFFF;
 $dark-text: #2D2B55;
 $medium-text: #6C63A0;
-$light-text: #9E9BC7;
 $error-color: #dc3545;
-$success-color: #28a745;
-$warning-color: #ffc107;
 $border-radius: 16px;
 $border-radius-sm: 8px;
 $shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
+
+$dark-bg: #0f0f23;
+$dark-surface: #1a1a2e;
+$dark-card: #24243a;
+$dark-text-primary: #f8fafc;
+$dark-text-secondary: #e2e8f0;
+$dark-border: #334155;
+
+@mixin dark-mode {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+@mixin theme-card {
+  background: $white;
+  box-shadow: $shadow;
+  
+  @include dark-mode {
+    background: $dark-card;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid $dark-border;
+  }
+}
+
+@mixin theme-text-primary {
+  color: $dark-text;
+  
+  @include dark-mode {
+    color: $dark-text-primary;
+  }
+}
+
+@mixin theme-text-secondary {
+  color: $medium-text;
+  
+  @include dark-mode {
+    color: $dark-text-secondary;
+  }
+}
+
+@mixin theme-input {
+  background: #f8f9fa;
+  border: 2px solid rgba($primary-color, 0.1);
+  color: $dark-text;
+  
+  @include dark-mode {
+    background: $dark-surface;
+    border-color: $dark-border;
+    color: $dark-text-primary;
+  }
+}
 
 .contact-list-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
   padding: 20px;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  
+  @include dark-mode {
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 10px;
+  }
 }
 
 .loading-state {
@@ -27,12 +85,12 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;
+  padding: 80px 20px;
   text-align: center;
   
   .spinner {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border: 4px solid $primary-light;
     border-top: 4px solid $primary-color;
     border-radius: 50%;
@@ -41,7 +99,7 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   }
   
   p {
-    color: $medium-text;
+    @include theme-text-secondary;
     font-size: 16px;
   }
 }
@@ -64,13 +122,13 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
     }
     
     h3 {
-      color: $dark-text;
+      @include theme-text-primary;
       margin-bottom: 10px;
       font-size: 1.5rem;
     }
     
     p {
-      color: $medium-text;
+      @include theme-text-secondary;
       margin-bottom: 25px;
       line-height: 1.5;
     }
@@ -84,6 +142,10 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
 
 .header-section {
   margin-bottom: 30px;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 25px;
+  }
 }
 
 .header-content {
@@ -92,36 +154,33 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   align-items: center;
   margin-bottom: 20px;
   
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
   .page-title {
-    color: $dark-text;
+    @include theme-text-primary;
     font-size: 2.5rem;
     font-weight: 700;
     display: flex;
     align-items: center;
     gap: 15px;
     
+    @media (max-width: 768px) {
+      font-size: 2.2rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 1.8rem;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
     i {
       color: $primary-color;
       font-size: 2.2rem;
-    }
-  }
-  
-  .logout-btn {
-    background: linear-gradient(135deg, $primary-color, $accent-color);
-    color: $white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: $border-radius-sm;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s ease;
-    
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: $shadow-hover;
     }
   }
 }
@@ -130,13 +189,18 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   .search-container {
     position: relative;
     max-width: 500px;
+    margin: 0 auto;
+    
+    @media (max-width: 768px) {
+      max-width: 100%;
+    }
     
     .search-icon {
       position: absolute;
       left: 15px;
       top: 50%;
       transform: translateY(-50%);
-      color: $medium-text;
+      @include theme-text-secondary;
       z-index: 2;
     }
     
@@ -146,8 +210,9 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
       border: 2px solid rgba($primary-color, 0.1);
       border-radius: $border-radius;
       font-size: 16px;
-      background: $white;
+      @include theme-input;
       transition: all 0.3s ease;
+      box-sizing: border-box;
       
       &:focus {
         outline: none;
@@ -163,13 +228,20 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
       transform: translateY(-50%);
       background: none;
       border: none;
-      color: $medium-text;
+      @include theme-text-secondary;
       cursor: pointer;
       padding: 5px;
-      transition: color 0.3s ease;
+      transition: all 0.3s ease;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       
       &:hover {
         color: $primary-color;
+        background: rgba($primary-color, 0.1);
       }
     }
   }
@@ -177,23 +249,39 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
 
 .stats-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
   margin-bottom: 30px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .stat-card {
-  background: $white;
+  @include theme-card;
   padding: 25px;
   border-radius: $border-radius;
-  box-shadow: $shadow;
   display: flex;
   align-items: center;
   gap: 15px;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  
+  @media (max-width: 480px) {
+    padding: 20px;
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
   
   &:hover {
     transform: translateY(-5px);
+    box-shadow: $shadow-hover;
   }
   
   .stat-icon {
@@ -206,10 +294,21 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
     justify-content: center;
     font-size: 24px;
     color: $primary-color;
+    flex-shrink: 0;
+    
+    @include dark-mode {
+      background: linear-gradient(135deg, rgba($primary-light, 0.2), $dark-card);
+    }
     
     &.favorite {
       background: linear-gradient(135deg, #fff9c4, $white);
       color: #ffd600;
+    }
+    
+    @media (max-width: 480px) {
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
     }
   }
   
@@ -218,12 +317,13 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
       display: block;
       font-size: 2rem;
       font-weight: 700;
-      color: $dark-text;
+      @include theme-text-primary;
       line-height: 1;
+      margin-bottom: 4px;
     }
     
     .stat-label {
-      color: $medium-text;
+      @include theme-text-secondary;
       font-size: 14px;
     }
   }
@@ -236,14 +336,20 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
     align-items: center;
     margin-bottom: 25px;
     
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 15px;
+      text-align: center;
+    }
+    
     h2 {
-      color: $dark-text;
+      @include theme-text-primary;
       font-size: 1.8rem;
       font-weight: 600;
     }
     
     .toggle-form-btn {
-      background: linear-gradient(135deg, $primary-color, $accent-color);
+      background: linear-gradient(135deg, $primary-color, #9575CD);
       color: $white;
       border: none;
       padding: 12px 24px;
@@ -254,6 +360,12 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
       align-items: center;
       gap: 8px;
       transition: all 0.3s ease;
+      
+      @media (max-width: 480px) {
+        padding: 10px 20px;
+        width: 100%;
+        justify-content: center;
+      }
       
       &:hover {
         transform: translateY(-2px);
@@ -266,28 +378,42 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
 .contact-form-container {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.5s ease, margin-bottom 0.3s ease;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   margin-bottom: 0;
+  opacity: 0;
   
   &.active {
-    max-height: 1000px;
+    max-height: 1200px;
     margin-bottom: 30px;
+    opacity: 1;
   }
 }
 
 .form-card {
-  background: $white;
+  @include theme-card;
   padding: 30px;
   border-radius: $border-radius;
-  box-shadow: $shadow;
+  
+  @media (max-width: 768px) {
+    padding: 25px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 20px;
+  }
   
   h3 {
-    color: $dark-text;
+    @include theme-text-primary;
     font-size: 1.5rem;
     margin-bottom: 25px;
     display: flex;
     align-items: center;
     gap: 10px;
+    
+    @media (max-width: 480px) {
+      justify-content: center;
+      text-align: center;
+    }
     
     i {
       color: $primary-color;
@@ -297,13 +423,29 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
 
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
   margin-bottom: 25px;
   
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
   .form-group {
+    display: flex;
+    flex-direction: column;
+    
     &.full-width {
       grid-column: 1 / -1;
+    }
+    
+    &.required {
+      .form-label::after {
+        content: '*';
+        color: $error-color;
+        margin-left: 4px;
+      }
     }
   }
 }
@@ -312,7 +454,7 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: $dark-text;
+  @include theme-text-primary;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -330,23 +472,23 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   border-radius: $border-radius-sm;
   font-size: 16px;
   transition: all 0.3s ease;
-  background: #f8f9fa;
+  @include theme-input;
+  box-sizing: border-box;
   
   &:focus {
     outline: none;
     border-color: $primary-color;
-    background: $white;
     box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
-  }
-  
-  &.error {
-    border-color: $error-color;
   }
 }
 
 .form-textarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 100px;
+  
+  @media (max-width: 480px) {
+    min-height: 80px;
+  }
 }
 
 .error-message {
@@ -357,7 +499,7 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   align-items: center;
   gap: 5px;
   margin-bottom: 15px;
-  padding: 10px;
+  padding: 12px;
   background: rgba($error-color, 0.1);
   border-radius: $border-radius-sm;
   border-left: 4px solid $error-color;
@@ -367,6 +509,16 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   display: flex;
   gap: 15px;
   justify-content: flex-end;
+  flex-wrap: wrap;
+  
+  @media (max-width: 768px) {
+    justify-content: stretch;
+  }
+  
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 12px;
+  }
   
   .btn-primary, .btn-secondary {
     padding: 12px 24px;
@@ -378,10 +530,16 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
     display: flex;
     align-items: center;
     gap: 8px;
+    flex: 1;
+    justify-content: center;
+    
+    @media (max-width: 480px) {
+      padding: 10px 20px;
+    }
   }
   
   .btn-primary {
-    background: linear-gradient(135deg, $primary-color, $accent-color);
+    background: linear-gradient(135deg, $primary-color, #9575CD);
     color: $white;
     
     &:hover:not(:disabled) {
@@ -416,35 +574,37 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
 
 .empty-state, .no-results {
   text-align: center;
-  padding: 60px 20px;
-  background: $white;
+  padding: 80px 20px;
+  @include theme-card;
   border-radius: $border-radius;
-  box-shadow: $shadow;
+  
+  @media (max-width: 480px) {
+    padding: 60px 15px;
+  }
   
   .empty-icon, i {
     font-size: 4rem;
     color: $primary-light;
     margin-bottom: 20px;
+    
+    @media (max-width: 480px) {
+      font-size: 3rem;
+    }
   }
   
   h3 {
-    color: $dark-text;
+    @include theme-text-primary;
     margin-bottom: 10px;
     font-size: 1.5rem;
   }
   
   p {
-    color: $medium-text;
+    @include theme-text-secondary;
     margin-bottom: 25px;
-    font-size: 1rem;
+    line-height: 1.5;
   }
 }
 
-.no-results {
-  i {
-    color: $medium-text;
-  }
-}
 
 .floating-action-btn {
   position: fixed;
@@ -453,7 +613,7 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: linear-gradient(135deg, $primary-color, $accent-color);
+  background: linear-gradient(135deg, $primary-color, #9575CD);
   color: $white;
   border: none;
   font-size: 24px;
@@ -461,80 +621,29 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   box-shadow: $shadow-hover;
   transition: all 0.3s ease;
   z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  @media (max-width: 768px) {
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 50px;
+    height: 50px;
+    bottom: 15px;
+    right: 15px;
+  }
   
   &:hover {
     transform: scale(1.1);
   }
 }
 
-@media (max-width: 768px) {
-  .contact-list-page {
-    padding: 15px;
-  }
-  
-  .header-content {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
-    
-    .page-title {
-      font-size: 2rem;
-    }
-  }
-  
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .stats-section {
-    grid-template-columns: 1fr;
-  }
-  
-  .section-header {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
-  }
-  
-  .form-actions {
-    flex-direction: column;
-    
-    .btn-primary, .btn-secondary {
-      width: 100%;
-      justify-content: center;
-    }
-  }
-  
-  .floating-action-btn {
-    bottom: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    font-size: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .contact-list-page {
-    padding: 10px;
-  }
-  
-  .form-card {
-    padding: 20px;
-  }
-  
-  .stat-card {
-    padding: 20px;
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .header-content .page-title {
-    font-size: 1.8rem;
-  }
-}
-
-// Animaciones
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -550,21 +659,17 @@ $shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
   animation: fadeIn 0.5s ease;
 }
 
-// Scroll personalizado
-::-webkit-scrollbar {
-  width: 8px;
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: $primary-light;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: $primary-color;
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

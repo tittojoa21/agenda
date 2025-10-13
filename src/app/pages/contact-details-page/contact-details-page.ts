@@ -1,11 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ContactsService } from '../../services/contacts-service';
 import { Contact } from '../../interfaces/contacto';
 
 @Component({
   selector: 'app-contact-details-page',
-  imports: [RouterModule],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './contact-details-page.html',
   styleUrl: './contact-details-page.scss'
 })
@@ -28,7 +30,7 @@ export class ContactDetailsPage implements OnInit {
   }
 
   async loadContact(): Promise<void> {
-    const contactId = this.route.snapshot.paramMap.get('id');
+    const contactId = this.route.snapshot.paramMap.get('idContacto');
     
     if (!contactId) {
       this.showError = true;
@@ -46,18 +48,16 @@ export class ContactDetailsPage implements OnInit {
       );
       
       if (!this.contacto) {
-        const res = await this.contactsService.getContactById(contactId);
-        if (res) {
-          this.contacto = res;
-        }
+        const contact = await this.contactsService.getContactById(contactId);
+        this.contacto = contact || undefined;
       }
       
       if (!this.contacto) {
         this.showError = true;
-        this.errorMessage = 'No se pudo encontrar el contacto';
+        this.errorMessage = 'No se pudo encontrar el contacto solicitado';
       }
       
-    } catch (error: any) {
+    } catch (error: any) {  
       console.error('Error loading contact:', error);
       this.showError = true;
       this.errorMessage = error.message || 'Error al cargar el contacto. Verifica tu conexión.';
@@ -70,8 +70,8 @@ export class ContactDetailsPage implements OnInit {
     if (!this.contacto) return;
 
     try {
-      const res = await this.contactsService.setFavourite(this.contacto.id);
-      if (res) {
+      const success = await this.contactsService.setFavourite(this.contacto.id);
+      if (success) {
         this.contacto.isFavorite = !this.contacto.isFavorite;
         
         // Mostrar feedback
@@ -94,8 +94,8 @@ export class ContactDetailsPage implements OnInit {
     }
 
     try {
-      const res = await this.contactsService.deleteContact(this.contacto.id);
-      if (res) {
+      const success = await this.contactsService.deleteContact(this.contacto.id);
+      if (success) {
         this.showToastMessage('Contacto eliminado correctamente');
         
         setTimeout(() => {
@@ -116,8 +116,8 @@ export class ContactDetailsPage implements OnInit {
 
   getContactInitials(): string {
     if (!this.contacto) return '';
-    const first = this.contacto.firstName.charAt(0).toUpperCase();
-    const last = this.contacto.lastName ? this.contacto.lastName.charAt(0).toUpperCase() : '';
+    const first = this.contacto.firstName?.charAt(0)?.toUpperCase() || '';
+    const last = this.contacto.lastName?.charAt(0)?.toUpperCase() || '';
     return first + last;
   }
 
@@ -142,10 +142,8 @@ export class ContactDetailsPage implements OnInit {
   formatPhoneNumber(phone: string): string {
     if (!phone) return '';
     
-    // Limpiar el número
     const cleaned = phone.replace(/\D/g, '');
     
-    // Aplicar formato según la longitud
     if (cleaned.length === 10) {
       return cleaned.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
     } else if (cleaned.length === 11) {
@@ -159,11 +157,10 @@ export class ContactDetailsPage implements OnInit {
     const imgElement = event.target as HTMLImageElement;
     imgElement.style.display = 'none';
     
-    // Mostrar iniciales si la imagen falla
-    const avatarElement = imgElement.closest('.contact-avatar');
+    const avatarElement = imgElement.closest('.avatar-image');
     if (avatarElement) {
-      const initialsElement = avatarElement.querySelector('.avatar-initials') as HTMLElement;
-      if (initialsElement) {
+      const initialsElement = avatarElement.nextElementSibling as HTMLElement;
+      if (initialsElement && initialsElement.classList.contains('avatar-initials')) {
         initialsElement.style.display = 'flex';
       }
     }
@@ -184,7 +181,6 @@ export class ContactDetailsPage implements OnInit {
         textArea.style.opacity = '0';
         document.body.appendChild(textArea);
         textArea.select();
-        document.execCommand('copy');
         document.body.removeChild(textArea);
         this.showToastMessage('Copiado al portapapeles');
       } catch (fallbackError) {
@@ -239,9 +235,5 @@ export class ContactDetailsPage implements OnInit {
 
   async reloadContact(): Promise<void> {
     await this.loadContact();
-  }
-
-  hasImage(): boolean {
-    return !!(this.contacto?.image);
   }
 }

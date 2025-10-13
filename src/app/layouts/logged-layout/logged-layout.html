@@ -17,16 +17,9 @@
              aria-current="page">
             <i class="fas fa-users nav-icon"></i>
             <span class="nav-text">Contactos</span>
-            <span class="nav-badge" *ngIf="contactsCount > 0">{{contactsCount}}</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a [routerLink]='["/groups"]' 
-             class="nav-link"
-             routerLinkActive="active" 
-             [routerLinkActiveOptions]="{exact: true}">
-            <i class="fas fa-layer-group nav-icon"></i>
-            <span class="nav-text">Grupos</span>
+            @if (contactsCount > 0) {
+              <span class="nav-badge">{{contactsCount}}</span>
+            }
           </a>
         </li>
       </ul>
@@ -38,37 +31,24 @@
           <i class="fas fa-user-circle"></i>
         </div>
         <div class="user-details">
-          <span class="user-name" title="Usuario actual">Mi Cuenta</span>
+          <span class="user-name">Mi Cuenta</span>
           <span class="user-status">Conectado</span>
         </div>
       </div>
       
-      <div class="user-actions">
-        <button class="btn-logout" 
-                (click)="showLogoutModal()"
-                aria-label="Cerrar sesión"
-                title="Cerrar sesión">
-          <i class="fas fa-sign-out-alt"></i>
-          <span class="logout-text">Salir</span>
-        </button>
-      </div>
+      <button class="btn-logout" 
+              (click)="showLogoutModal()"
+              aria-label="Cerrar sesión"
+              title="Cerrar sesión">
+        <i class="fas fa-sign-out-alt"></i>
+        <span class="logout-text">Salir</span>
+      </button>
     </div>
   </div>
 </header>
 
 <main class="layout-main">
   <div class="main-container">
-    <nav class="breadcrumb-nav" aria-label="Navegación migas de pan">
-      <ol class="breadcrumb-list">
-        <li class="breadcrumb-item">
-          <a [routerLink]='["/"]' class="breadcrumb-link">
-            <i class="fas fa-home"></i>
-            Inicio
-          </a>
-        </li>
-      </ol>
-    </nav>
-
     <div class="content-area">
       <router-outlet/>
     </div>
@@ -78,9 +58,7 @@
 <footer class="layout-footer">
   <div class="footer-container">
     <div class="footer-content">
-        <span class="footer-text">© 2025 ContactApp. Todos los derechos reservados.</span>
-        <nav class="footer-nav" aria-label="Navegación del pie de página">
-        </nav>
+      <span class="footer-text">© 2025 ContactApp. Todos los derechos reservados.</span>
     </div>  
   </div>
 </footer>

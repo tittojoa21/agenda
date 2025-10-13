@@ -19,7 +19,6 @@ export class Auth {
   private revisionTokenInterval: number | undefined;
 
   constructor() {
-    // Si tengo sesión iniciada reviso que no esté vencida
     if (this.token) {
       this.revisionTokenInterval = this.revisionToken();
     }

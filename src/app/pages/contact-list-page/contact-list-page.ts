@@ -17,7 +17,6 @@ export class ContactListPage implements OnInit, OnDestroy {
   authService = inject(Auth); 
   contactsService = inject(ContactsService);
 
-  // Estados del componente
   showContactForm = false;
   searchTerm = '';
   filteredContacts: Contact[] = [];
@@ -26,7 +25,6 @@ export class ContactListPage implements OnInit, OnDestroy {
   errorMessage = '';
   showError = false;
 
-  // Datos del nuevo contacto
   newContact: NewContact = {
     firstName: '',
     lastName: '',
@@ -131,14 +129,11 @@ export class ContactListPage implements OnInit, OnDestroy {
         isFavorite: false
       });
 
-      // Actualizar lista filtrada
       this.filteredContacts = [...this.contactsService.contacts];
       
-      // Resetear formulario
       this.resetNewContactForm();
       this.showContactForm = false;
       
-      // Mostrar mensaje de éxito
       console.log('Contacto creado exitosamente');
 
     } catch (error: any) {

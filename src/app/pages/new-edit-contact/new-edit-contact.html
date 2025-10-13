@@ -30,6 +30,7 @@
 
     <form class="contact-form" (ngSubmit)="handleFormSubmission(newContactForm)" #newContactForm="ngForm">
       <div class="form-grid">
+        <!-- Campo Nombre -->
         <div class="form-group">
           <div class="input-container" [class]="getFieldClass(firstName)">
             <input 
@@ -185,13 +186,37 @@
         </div>
 
         <div class="form-group full-width">
+          <div class="input-container" [class]="getFieldClass(description)">
+            <textarea 
+              id="description" 
+              name="description" 
+              ngModel 
+              maxlength="500" 
+              #description="ngModel"
+              (blur)="validateField(description, 'description')"
+              placeholder=" "
+              rows="3"
+              class="form-textarea"></textarea>
+            <label for="description" class="input-label">Descripción</label>
+            <i class="input-icon fas fa-file-alt"></i>
+            <div class="input-underline"></div>
+            <div class="input-focus-border"></div>
+          </div>
+          @if (fieldStates()['description']) {
+            <div class="error-message">
+              <i class="fas fa-exclamation-circle"></i>
+              {{ fieldStates()['description'] }}
+            </div>
+          }
+        </div>
+
+        <div class="form-group full-width">
           <div class="input-container" [class]="getFieldClass(image)">
             <input 
               id="image" 
               name="image" 
               type="url" 
               ngModel 
-              minlength="10" 
               #image="ngModel"
               (blur)="validateField(image, 'image')"
               placeholder=" "
@@ -207,17 +232,6 @@
               {{ fieldStates()['image'] }}
             </div>
           }
-        </div>
-
-        
-        <div class="form-group checkbox-group">
-          <label class="checkbox-container">
-            <input id="favourite" name="isFavourite" type="checkbox" ngModel>
-            <span class="checkmark">
-              <i class="fas fa-star"></i>
-            </span>
-            <span class="checkbox-label">Marcar como favorito</span>
-          </label>
         </div>
       </div>
 
@@ -235,7 +249,6 @@
         </button>
         <button type="submit" class="btn-primary" [disabled]="newContactForm.invalid || solicitudABackEnCurso()">
           @if (solicitudABackEnCurso()) {
-            <app-spinner class="button-spinner"/>
           } @else {
             <i class="fas" [class.fa-save]="idContacto()" [class.fa-plus]="!idContacto()"></i>
           }
