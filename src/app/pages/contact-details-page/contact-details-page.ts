@@ -74,7 +74,6 @@ export class ContactDetailsPage implements OnInit {
       if (success) {
         this.contacto.isFavorite = !this.contacto.isFavorite;
         
-        // Mostrar feedback
         const action = this.contacto.isFavorite ? 'agregado a' : 'quitado de';
         this.showToastMessage(`Contacto ${action} favoritos`);
       }

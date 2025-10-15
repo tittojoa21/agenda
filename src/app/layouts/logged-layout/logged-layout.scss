@@ -237,12 +237,7 @@ $dark-border: #334155;
     gap: 12px;
     padding: 8px 16px;
     border-radius: $border-radius;
-    transition: $transition;
-    cursor: pointer;
-
-    &:hover {
-      background: rgba($primary-color, 0.05);
-    }
+    
 
     .user-avatar {
       width: 40px;
@@ -288,6 +283,7 @@ $dark-border: #334155;
     font-weight: 500;
     cursor: pointer;
     transition: $transition;
+    
 
     &:hover {
       background: $error-color;

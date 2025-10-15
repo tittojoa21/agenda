@@ -100,7 +100,6 @@ export class ContactListPage implements OnInit, OnDestroy {
   }
 
   async createContact(): Promise<void> {
-    // Validación básica
     if (!this.newContact.firstName?.trim() || !this.newContact.number?.trim()) {
       this.showError = true;
       this.errorMessage = 'Nombre y teléfono son campos obligatorios.';
@@ -202,7 +201,6 @@ export class ContactListPage implements OnInit, OnDestroy {
     return !this.hasContacts && !this.isLoading && !this.showError;
   }
 
-  // Método para recargar contactos
   async reloadContacts(): Promise<void> {
     await this.loadContacts();
   }

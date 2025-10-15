@@ -100,11 +100,9 @@ export class RegisterPage {
           });
         }
       } else {
-        // Manejar errores del servidor
         this.handleRegistrationError(res);
       }
     } catch (error) {
-      // Manejar errores de conexión
       console.error('Error de conexión:', error);
       this.errorRegister = true;
       this.errorMessage = 'Error de conexión. Verifica tu conexión a internet';
