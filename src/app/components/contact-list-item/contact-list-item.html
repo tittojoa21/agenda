@@ -1,12 +1,9 @@
 <div class="contact-list-item" 
      [class]="variant()"
      [class.favorite]="contacto().isFavorite"
-     [class.compact]="variant() === 'compact'"
-     [class.detailed]="variant() === 'detailed'"
      (click)="onContactClick()"
      role="button"
-     tabindex="0"
-     [attr.aria-label]="'Ver detalles de ' + getFullName()">
+     tabindex="0">
   
   <div class="contact-avatar">
     @if (contacto().image) {

@@ -46,7 +46,6 @@
               autocomplete="given-name">
             <label for="first-name" class="input-label">Nombre *</label>
             <i class="input-icon fas fa-user"></i>
-            <div class="input-underline"></div>
             <div class="input-focus-border"></div>
           </div>
           @if (fieldStates()['firstName']) {
@@ -71,7 +70,6 @@
               autocomplete="family-name">
             <label for="last-name" class="input-label">Apellido</label>
             <i class="input-icon fas fa-user-tag"></i>
-            <div class="input-underline"></div>
             <div class="input-focus-border"></div>
           </div>
           @if (fieldStates()['lastName']) {
@@ -98,7 +96,6 @@
               autocomplete="tel">
             <label for="phone" class="input-label">Teléfono *</label>
             <i class="input-icon fas fa-phone"></i>
-            <div class="input-underline"></div>
             <div class="input-focus-border"></div>
           </div>
           @if (fieldStates()['number']) {
@@ -123,7 +120,6 @@
               autocomplete="email">
             <label for="email" class="input-label">Email</label>
             <i class="input-icon fas fa-envelope"></i>
-            <div class="input-underline"></div>
             <div class="input-focus-border"></div>
           </div>
           @if (fieldStates()['email']) {
@@ -148,7 +144,6 @@
               autocomplete="street-address">
             <label for="address" class="input-label">Dirección</label>
             <i class="input-icon fas fa-map-marker-alt"></i>
-            <div class="input-underline"></div>
             <div class="input-focus-border"></div>
           </div>
           @if (fieldStates()['address']) {
@@ -173,7 +168,6 @@
               autocomplete="organization">
             <label for="company" class="input-label">Compañía</label>
             <i class="input-icon fas fa-building"></i>
-            <div class="input-underline"></div>
             <div class="input-focus-border"></div>
           </div>
           @if (fieldStates()['company']) {
@@ -198,7 +192,6 @@
               class="form-textarea"></textarea>
             <label for="description" class="input-label">Descripción</label>
             <i class="input-icon fas fa-file-alt"></i>
-            <div class="input-underline"></div>
             <div class="input-focus-border"></div>
           </div>
           @if (fieldStates()['description']) {
@@ -222,7 +215,6 @@
               autocomplete="photo">
             <label for="image" class="input-label">URL Imagen</label>
             <i class="input-icon fas fa-image"></i>
-            <div class="input-underline"></div>
             <div class="input-focus-border"></div>
           </div>
           @if (fieldStates()['image']) {
@@ -247,10 +239,7 @@
           Cancelar
         </button>
         <button type="submit" class="btn-primary" [disabled]="newContactForm.invalid || solicitudABackEnCurso()">
-          @if (solicitudABackEnCurso()) {
-          } @else {
-            <i class="fas" [class.fa-save]="idContacto()" [class.fa-plus]="!idContacto()"></i>
-          }
+          <i class="fas" [class.fa-save]="idContacto()" [class.fa-plus]="!idContacto()"></i>
           @if(idContacto()) {
             Actualizar contacto
           } @else {

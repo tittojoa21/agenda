@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { Auth } from '../../services/auth';
 import { ContactsService } from '../../services/contacts-service';
 import { ModalHelpers } from '../../utils/modals';
-import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -21,29 +20,14 @@ export class LoggedLayoutComponent implements OnInit, OnDestroy {
   router = inject(Router);
 
   contactsCount = 0;
-  currentRoute = '';
-  isMobileMenuOpen = false;
 
   ngOnInit(): void {
     this.contactsCount = this.contactsService.contacts.length;
-    this.setupRouteTracking();
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  private setupRouteTracking(): void {
-    this.router.events
-      .pipe(
-        filter(event => event instanceof NavigationEnd),
-        takeUntil(this.destroy$)
-      )
-      .subscribe((event: NavigationEnd) => {
-        this.currentRoute = event.urlAfterRedirects;
-        this.isMobileMenuOpen = false;
-      });
   }
 
   async showLogoutModal(): Promise<void> {
@@ -66,19 +50,5 @@ export class LoggedLayoutComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.authService.logout();
     }, 300);
-  }
-
-  toggleMobileMenu(): void {
-    this.isMobileMenuOpen = !this.isMobileMenuOpen;
-  }
-
-  getPageTitle(): string {
-    const routeMap: { [key: string]: string } = {
-      '/': 'Mis Contactos',
-      '/groups': 'Grupos de Contactos',
-      '/contacts/new': 'Nuevo Contacto'
-    };
-    
-    return routeMap[this.currentRoute] || 'ContactApp';
   }
 }

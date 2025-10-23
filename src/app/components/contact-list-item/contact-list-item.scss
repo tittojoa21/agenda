@@ -10,52 +10,8 @@ $shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 $shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
 $transition: all 0.3s ease;
 
-$dark-card: #2d2b55;
-$dark-text-primary: #f8fafc;
-$dark-text-secondary: #e2e8f0;
-$dark-border: #374151;
-
-@mixin flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@mixin truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-@mixin theme-card {
-  background: $white;
-  box-shadow: $shadow;
-  
-  @media (prefers-color-scheme: dark) {
-    background: $dark-card;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-    border: 1px solid $dark-border;
-  }
-}
-
-@mixin theme-text-primary {
-  color: $dark-text;
-  
-  @media (prefers-color-scheme: dark) {
-    color: $dark-text-primary;
-  }
-}
-
-@mixin theme-text-secondary {
-  color: $medium-text;
-  
-  @media (prefers-color-scheme: dark) {
-    color: $dark-text-secondary;
-  }
-}
-
 .contact-list-item {
-  @include theme-card;
+  background: $white;
   border-radius: $border-radius;
   padding: 16px;
   display: flex;
@@ -113,10 +69,6 @@ $dark-border: #374151;
     background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), $white);
     border-color: rgba(255, 215, 0, 0.2);
 
-    @media (prefers-color-scheme: dark) {
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), $dark-card);
-    }
-
     &::before {
       content: '';
       position: absolute;
@@ -152,7 +104,9 @@ $dark-border: #374151;
     height: 50px;
     border-radius: 50%;
     background: linear-gradient(135deg, $primary-color, #9575CD);
-    @include flex-center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: $white;
     font-weight: 700;
     font-size: 1.1rem;
@@ -173,16 +127,14 @@ $dark-border: #374151;
     height: 20px;
     border-radius: 50%;
     background: #ffd700;
-    @include flex-center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: $dark-text;
     font-size: 10px;
     border: 2px solid $white;
     box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
     animation: pulse 2s infinite;
-
-    @media (prefers-color-scheme: dark) {
-      border-color: $dark-card;
-    }
   }
 }
 
@@ -205,11 +157,13 @@ $dark-border: #374151;
     width: 100%;
 
     .contact-name {
-      @include theme-text-primary;
+      color: $dark-text;
       font-weight: 600;
       font-size: 1.1rem;
       margin: 0;
-      @include truncate;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       flex: 1;
     }
 
@@ -221,11 +175,6 @@ $dark-border: #374151;
       padding: 2px 8px;
       border-radius: 12px;
       flex-shrink: 0;
-
-      @media (prefers-color-scheme: dark) {
-        background: rgba($primary-color, 0.2);
-        color: $dark-text-secondary;
-      }
     }
   }
 }
@@ -242,11 +191,13 @@ $dark-border: #374151;
     display: flex;
     align-items: center;
     gap: 8px;
-    @include theme-text-secondary;
+    color: $medium-text;
     font-size: 0.9rem;
     text-decoration: none;
     transition: $transition;
-    @include truncate;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     width: 100%;
 
     i {
@@ -268,7 +219,7 @@ $dark-border: #374151;
 }
 
 .contact-description {
-  @include theme-text-secondary;
+  color: $medium-text;
   font-size: 0.9rem;
   line-height: 1.4;
   margin: 8px 0 0 0;
@@ -289,7 +240,9 @@ $dark-border: #374151;
     height: 36px;
     border: none;
     border-radius: 50%;
-    @include flex-center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     transition: $transition;
     font-size: 0.9rem;
@@ -306,10 +259,6 @@ $dark-border: #374151;
       background: rgba(255, 193, 7, 0.1);
       color: #ffc107;
 
-      @media (prefers-color-scheme: dark) {
-        background: rgba(255, 193, 7, 0.2);
-      }
-
       &.favorited {
         background: #ffd600;
         color: $white;
@@ -325,10 +274,6 @@ $dark-border: #374151;
       background: rgba(33, 150, 243, 0.1);
       color: #2196f3;
 
-      @media (prefers-color-scheme: dark) {
-        background: rgba(33, 150, 243, 0.2);
-      }
-
       &:hover:not(:disabled) {
         transform: scale(1.1);
         box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
@@ -339,10 +284,6 @@ $dark-border: #374151;
       background: rgba(244, 67, 54, 0.1);
       color: #f44336;
 
-      @media (prefers-color-scheme: dark) {
-        background: rgba(244, 67, 54, 0.2);
-      }
-
       &:hover:not(:disabled) {
         transform: scale(1.1);
         box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
@@ -350,7 +291,6 @@ $dark-border: #374151;
     }
   }
 }
-
 
 @media (max-width: 768px) {
   .contact-list-item {
@@ -459,16 +399,20 @@ $dark-border: #374151;
   outline-offset: 2px;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .contact-list-item,
   .btn-icon,
   .avatar-image,
   .avatar-initials {
     transition: none;
+    animation: none;
+  }
+  
+  .contact-list-item:hover {
+    transform: none;
+  }
+  
+  .favorite-badge {
     animation: none;
   }
 }

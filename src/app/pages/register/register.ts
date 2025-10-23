@@ -70,8 +70,6 @@ export class RegisterPage {
       password: this.formData.password
     };
 
-    console.log('Enviando datos al backend:', userData);
-
     this.isLoading = true;
 
     try {
@@ -84,40 +82,27 @@ export class RegisterPage {
       });
 
       if (res.ok) {
-        console.log('Registro exitoso');
         this.errorRegister = false;
         this.errorMessage = '';
         
-        const loginSuccess = await this.autoLoginAfterRegister(userData.email, userData.password);
+        const loginSuccess = await this.authService.login({
+          email: userData.email,
+          password: userData.password
+        });
         
         if (loginSuccess) {
-          
           this.router.navigate(['/']);
         } else {
-          
-          this.router.navigate(['/login'], { 
-            queryParams: { registered: 'true' } 
-          });
+          this.router.navigate(['/login']);
         }
       } else {
         this.handleRegistrationError(res);
       }
     } catch (error) {
-      console.error('Error de conexión:', error);
       this.errorRegister = true;
       this.errorMessage = 'Error de conexión. Verifica tu conexión a internet';
     } finally {
       this.isLoading = false;
-    }
-  }
-
-  private async autoLoginAfterRegister(email: string, password: string): Promise<boolean> {
-    try {
-      const loginData = { email, password };
-      return await this.authService.login(loginData);
-    } catch (error) {
-      console.log('Auto-login falló, redirigiendo al login manual');
-      return false;
     }
   }
 
@@ -134,24 +119,17 @@ export class RegisterPage {
 
       this.errorRegister = true;
       
-      switch (response.status) {
-        case 409:
-          this.errorMessage = 'Este email ya está registrado';
-          break;
-        case 400:
-          this.errorMessage = errorData.message || 'Datos inválidos. Por favor verifica la información';
-          break;
-        case 500:
-          this.errorMessage = 'Error del servidor. Por favor intenta más tarde';
-          break;
-        default:
-          this.errorMessage = errorData.message || 'Error en el registro. Por favor intenta nuevamente';
+      if (response.status === 409) {
+        this.errorMessage = 'Este email ya está registrado';
+      } else if (response.status === 400) {
+        this.errorMessage = errorData.message || 'Datos inválidos';
+      } else if (response.status === 500) {
+        this.errorMessage = 'Error del servidor. Intenta más tarde';
+      } else {
+        this.errorMessage = errorData.message || 'Error en el registro';
       }
-      
-      console.error('Error en el registro:', response.status, errorData);
     } catch (error) {
-      this.errorMessage = 'Error inesperado. Por favor intenta nuevamente';
-      console.error('Error al procesar respuesta:', error);
+      this.errorMessage = 'Error inesperado. Intenta nuevamente';
     }
   }
 
@@ -163,13 +141,11 @@ export class RegisterPage {
     }
   }
 
-
   clearError() {
     this.errorRegister = false;
     this.errorMessage = '';
     this.passwordMismatch = false;
   }
-
 
   checkPasswordMatch() {
     if (this.formData.password && this.formData.confirmPassword) {

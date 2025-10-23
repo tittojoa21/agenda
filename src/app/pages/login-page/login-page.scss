@@ -3,32 +3,11 @@ $royal-purple: #6A1B9A;
 $vibrant-purple: #8E24AA;
 $soft-purple: #AB47BC;
 $light-purple: #E1BEE7;
-$pale-lavender: #F3E5F6;
 $white: #FFFFFF;
 $dark-text: #2D2B55;
 $medium-text: #6C63A0;
 $light-text: #9E9BC7;
-
-$dark-bg: #0f0f23;
-$dark-surface: #1a1a2e;
-$dark-card: #24243a;
-$dark-text-primary: #f8fafc;
-$dark-text-secondary: #e2e8f0;
-$dark-text-tertiary: #94a3b8;
-$dark-border: #334155;
-$dark-accent: #7E57C2;
-
-$shadow-soft: 0 12px 32px rgba(74, 20, 140, 0.15);
-$shadow-medium: 0 20px 40px rgba(74, 20, 140, 0.2);
-$shadow-strong: 0 24px 60px rgba(74, 20, 140, 0.25);
-$shadow-extra: 0 32px 80px rgba(74, 20, 140, 0.3);
-
-$shadow-dark-soft: 0 12px 32px rgba(0, 0, 0, 0.4);
-$shadow-dark-medium: 0 20px 40px rgba(0, 0, 0, 0.5);
-$shadow-dark-strong: 0 24px 60px rgba(0, 0, 0, 0.6);
-
-$transition-smooth: all 0.3s ease;
-$transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+$error-color: #dc3545;
 
 $border-radius: 28px;
 $border-radius-sm: 18px;
@@ -39,6 +18,12 @@ $spacing-md: 24px;
 $spacing-lg: 32px;
 $spacing-xl: 40px;
 
+$shadow-soft: 0 12px 32px rgba(74, 20, 140, 0.15);
+$shadow-medium: 0 20px 40px rgba(74, 20, 140, 0.2);
+$shadow-strong: 0 24px 60px rgba(74, 20, 140, 0.25);
+$shadow-extra: 0 32px 80px rgba(74, 20, 140, 0.3);
+
+$transition-smooth: all 0.3s ease;
 
 @keyframes fadeInUp {
   from {
@@ -60,78 +45,16 @@ $spacing-xl: 40px;
   }
 }
 
-@mixin glass-effect($intensity: 0.96, $blur: 20px) {
-  background: rgba(255, 255, 255, $intensity);
-  backdrop-filter: blur($blur);
-  -webkit-backdrop-filter: blur($blur);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  
-  @media (prefers-color-scheme: dark) {
-    background: rgba($dark-card, $intensity - 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-  }
-}
-
-@mixin gradient-text($gradient) {
-  background: $gradient;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-@mixin focus-ring {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(142, 36, 170, 0.15);
-}
-
-@mixin perfect-center {
+.login-page {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-@mixin input-base-styles {
-  width: 100%;
-  padding: 16px 20px 16px 50px;
-  border: 2px solid rgba(142, 36, 170, 0.12);
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: $border-radius-sm;
-  font-size: 1rem;
-  color: $dark-text;
-  transition: $transition-smooth;
-  font-weight: 500;
-  line-height: 1.5;
-  font-family: inherit;
-  box-sizing: border-box;
-  min-height: 56px;
-  
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  
-  @media (prefers-color-scheme: dark) {
-    background: rgba($dark-surface, 0.85);
-    border-color: rgba(255, 255, 255, 0.18);
-    color: $dark-text-primary;
-  }
-  
-  &::placeholder {
-    color: transparent;
-  }
-}
-
-.login-page {
-  min-height: 100vh;
-  @include perfect-center;
   padding: $spacing-sm;
   background: linear-gradient(135deg, $deep-purple 0%, $vibrant-purple 45%, $royal-purple 100%);
   position: relative;
   overflow: hidden;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  
-  @media (prefers-color-scheme: dark) {
-    background: linear-gradient(135deg, #2d1b69 0%, #4a1e6b 45%, #3a1a5c 100%);
-  }
 }
 
 .login-background {
@@ -153,12 +76,6 @@ $spacing-xl: 40px;
       radial-gradient(circle at 20% 30%, rgba(171, 71, 188, 0.25) 0%, transparent 50%),
       radial-gradient(circle at 80% 70%, rgba(142, 36, 170, 0.25) 0%, transparent 50%);
     pointer-events: none;
-    
-    @media (prefers-color-scheme: dark) {
-      background: 
-        radial-gradient(circle at 20% 30%, rgba(171, 71, 188, 0.2) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(142, 36, 170, 0.2) 0%, transparent 50%);
-    }
   }
 }
 
@@ -174,11 +91,6 @@ $spacing-xl: 40px;
     opacity: 0.08;
     background: linear-gradient(135deg, $light-purple 0%, $white 100%);
     filter: blur(1px);
-    
-    @media (prefers-color-scheme: dark) {
-      background: linear-gradient(135deg, rgba(142, 36, 170, 0.25) 0%, rgba(171, 71, 188, 0.2) 100%);
-      opacity: 0.12;
-    }
     
     &.shape-1 {
       width: 200px;
@@ -206,17 +118,16 @@ $spacing-xl: 40px;
 }
 
 .login-card {
-  @include glass-effect(0.98, 20px);
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: $border-radius;
   padding: $spacing-lg;
   box-shadow: $shadow-extra;
   transition: $transition-smooth;
   position: relative;
   overflow: hidden;
-  
-  @media (prefers-color-scheme: dark) {
-    box-shadow: $shadow-dark-strong;
-  }
   
   &::after {
     content: '';
@@ -248,7 +159,9 @@ $spacing-xl: 40px;
     .logo-inner {
       width: 100%;
       height: 100%;
-      @include perfect-center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       background: linear-gradient(135deg, $royal-purple 0%, $vibrant-purple 100%);
       border-radius: 50%;
       color: $white;
@@ -256,10 +169,6 @@ $spacing-xl: 40px;
       box-shadow: $shadow-medium;
       position: relative;
       z-index: 2;
-      
-      @media (prefers-color-scheme: dark) {
-        box-shadow: 0 8px 25px rgba(106, 27, 154, 0.4);
-      }
     }
   }
   
@@ -267,12 +176,11 @@ $spacing-xl: 40px;
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: $spacing-xs;
-    @include gradient-text(linear-gradient(135deg, $deep-purple 0%, $vibrant-purple 100%));
+    background: linear-gradient(135deg, $deep-purple 0%, $vibrant-purple 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     letter-spacing: -0.5px;
-    
-    @media (prefers-color-scheme: dark) {
-      @include gradient-text(linear-gradient(135deg, $light-purple 0%, $soft-purple 100%));
-    }
   }
   
   p {
@@ -280,10 +188,6 @@ $spacing-xl: 40px;
     font-size: 1rem;
     font-weight: 500;
     margin-top: $spacing-sm;
-    
-    @media (prefers-color-scheme: dark) {
-      color: $dark-text-secondary;
-    }
   }
 }
 
@@ -305,49 +209,44 @@ $spacing-xl: 40px;
         font-size: 1.1rem;
         z-index: 2;
         pointer-events: none;
-        
-        @media (prefers-color-scheme: dark) {
-          color: $soft-purple;
-        }
       }
       
       input {
-        @include input-base-styles;
+        width: 100%;
+        padding: 16px 20px 16px 50px;
+        border: 2px solid rgba(142, 36, 170, 0.12);
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: $border-radius-sm;
+        font-size: 1rem;
+        color: $dark-text;
+        transition: $transition-smooth;
+        font-weight: 500;
+        line-height: 1.5;
+        font-family: inherit;
+        box-sizing: border-box;
+        min-height: 56px;
+        
+        &::placeholder {
+          color: transparent;
+        }
         
         &.error {
           border-color: rgba(220, 53, 69, 0.6);
           background: rgba(255, 255, 255, 0.98);
           
-          @media (prefers-color-scheme: dark) {
-            border-color: rgba(239, 68, 68, 0.6);
-            background: rgba($dark-surface, 0.9);
-          }
-          
           + .input-icon {
             color: #dc3545;
-            
-            @media (prefers-color-scheme: dark) {
-              color: #f87171;
-            }
           }
         }
         
         &:focus {
-          @include focus-ring;
+          outline: none;
+          box-shadow: 0 0 0 3px rgba(142, 36, 170, 0.15);
           background: $white;
           border-color: $vibrant-purple;
           
-          @media (prefers-color-scheme: dark) {
-            background: rgba($dark-surface, 0.95);
-            border-color: $soft-purple;
-          }
-          
           + .input-icon {
             color: $deep-purple;
-            
-            @media (prefers-color-scheme: dark) {
-              color: $light-purple;
-            }
           }
           
           ~ label {
@@ -356,11 +255,6 @@ $spacing-xl: 40px;
             color: $vibrant-purple;
             font-weight: 600;
             background: rgba(255, 255, 255, 0.95);
-            
-            @media (prefers-color-scheme: dark) {
-              background: $dark-card;
-              color: $soft-purple;
-            }
           }
         }
         
@@ -371,11 +265,6 @@ $spacing-xl: 40px;
             color: $vibrant-purple;
             font-weight: 600;
             background: rgba(255, 255, 255, 0.95);
-            
-            @media (prefers-color-scheme: dark) {
-              background: $dark-card;
-              color: $soft-purple;
-            }
           }
         }
       }
@@ -395,10 +284,6 @@ $spacing-xl: 40px;
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: calc(100% - 70px);
-        
-        @media (prefers-color-scheme: dark) {
-          color: $dark-text-tertiary;
-        }
       }
       
       .password-toggle {
@@ -418,17 +303,9 @@ $spacing-xl: 40px;
         align-items: center;
         justify-content: center;
         
-        @media (prefers-color-scheme: dark) {
-          color: $dark-text-tertiary;
-        }
-        
         &:hover {
           color: $vibrant-purple;
           background: rgba(142, 36, 170, 0.1);
-          
-          @media (prefers-color-scheme: dark) {
-            color: $soft-purple;
-          }
         }
       }
     }
@@ -442,10 +319,6 @@ $spacing-xl: 40px;
       gap: 4px;
       font-weight: 500;
       
-      @media (prefers-color-scheme: dark) {
-        color: #f87171;
-      }
-      
       &.main-error {
         text-align: center;
         margin-top: $spacing-sm;
@@ -454,78 +327,6 @@ $spacing-xl: 40px;
         border-radius: $border-radius-xs;
         border-left: 3px solid #dc3545;
         font-weight: 600;
-        
-        @media (prefers-color-scheme: dark) {
-          background: rgba(239, 68, 68, 0.12);
-          border-left-color: #ef4444;
-        }
-      }
-    }
-  }
-  
-  .form-options {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-bottom: $spacing-md;
-    
-    .checkbox-container {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      color: $medium-text;
-      font-size: 0.85rem;
-      font-weight: 500;
-      
-      @media (prefers-color-scheme: dark) {
-        color: $dark-text-secondary;
-      }
-      
-      input {
-        position: absolute;
-        opacity: 0;
-        cursor: pointer;
-        
-        &:checked ~ .checkmark {
-          background: linear-gradient(135deg, $royal-purple, $vibrant-purple);
-          border-color: $vibrant-purple;
-          
-          @media (prefers-color-scheme: dark) {
-            background: linear-gradient(135deg, $soft-purple, $light-purple);
-            border-color: $soft-purple;
-          }
-          
-          &::after {
-            display: block;
-          }
-        }
-      }
-      
-      .checkmark {
-        width: 18px;
-        height: 18px;
-        border: 2px solid $light-text;
-        border-radius: 4px;
-        margin-right: 8px;
-        position: relative;
-        transition: $transition-smooth;
-        
-        @media (prefers-color-scheme: dark) {
-          border-color: $dark-text-tertiary;
-        }
-        
-        &::after {
-          content: '';
-          position: absolute;
-          display: none;
-          left: 5px;
-          top: 2px;
-          width: 4px;
-          height: 8px;
-          border: solid $white;
-          border-width: 0 2px 2px 0;
-          transform: rotate(45deg);
-        }
       }
     }
   }
@@ -544,20 +345,14 @@ $spacing-xl: 40px;
   transition: $transition-smooth;
   position: relative;
   overflow: hidden;
-  @include perfect-center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 8px;
-  
-  @media (prefers-color-scheme: dark) {
-    background: linear-gradient(135deg, $soft-purple 0%, $vibrant-purple 100%);
-  }
   
   &:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(106, 27, 154, 0.4);
-    
-    @media (prefers-color-scheme: dark) {
-      box-shadow: 0 8px 25px rgba(106, 27, 154, 0.6);
-    }
   }
   
   &:active:not(:disabled) {
@@ -568,10 +363,6 @@ $spacing-xl: 40px;
     background: $medium-text;
     cursor: not-allowed;
     transform: none;
-    
-    @media (prefers-color-scheme: dark) {
-      background: #4a5568;
-    }
   }
 }
 
@@ -583,10 +374,6 @@ $spacing-xl: 40px;
     color: $medium-text;
     font-size: 0.9rem;
     margin: 0;
-    
-    @media (prefers-color-scheme: dark) {
-      color: $dark-text-secondary;
-    }
   }
   
   .register-btn {
@@ -595,16 +382,8 @@ $spacing-xl: 40px;
     font-weight: 600;
     transition: $transition-smooth;
     
-    @media (prefers-color-scheme: dark) {
-      color: $soft-purple;
-    }
-    
     &:hover {
       color: $deep-purple;
-      
-      @media (prefers-color-scheme: dark) {
-        color: $light-purple;
-      }
     }
   }
 }
@@ -690,22 +469,22 @@ $spacing-xl: 40px;
   }
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid $vibrant-purple;
+  outline-offset: 2px;
 }
+
 
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  
+  .login-card:hover,
+  .login-button:hover:not(:disabled) {
+    transform: none !important;
   }
 }

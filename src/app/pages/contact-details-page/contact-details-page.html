@@ -1,10 +1,7 @@
 <div class="contact-details-page">
   @if (cargandoContacto) {
     <div class="loading-state">
-      <div class="spinner-container">
-        <div class="spinner"></div>
-        <div class="spinner-ring"></div>
-      </div>
+      <div class="spinner"></div>
       <p>Cargando información del contacto...</p>
     </div>
   } @else if (!contacto) {
@@ -106,32 +103,26 @@
         </div>
       </div>
 
-      <nav class="tabs-navigation" aria-label="Navegación de pestañas">
+      <nav class="tabs-navigation">
         <button 
           class="tab-btn" 
           [class.active]="activeTab === 'info'"
-          (click)="setActiveTab('info')"
-          [attr.aria-selected]="activeTab === 'info'"
-          aria-controls="info-tab">
+          (click)="setActiveTab('info')">
           <i class="fas fa-info-circle"></i>
           Información
-          <span class="tab-indicator"></span>
         </button>
         <button 
           class="tab-btn" 
           [class.active]="activeTab === 'activity'"
-          (click)="setActiveTab('activity')"
-          [attr.aria-selected]="activeTab === 'activity'"
-          aria-controls="activity-tab">
+          (click)="setActiveTab('activity')">
           <i class="fas fa-history"></i>
           Actividad
-          <span class="tab-indicator"></span>
         </button>
       </nav>
 
       <div class="tab-content">
         @if (activeTab === 'info') {
-          <div id="info-tab" class="tab-pane info-tab" aria-hidden="false">
+          <div class="tab-pane info-tab">
             
             @if (hasContactInfo()) {
               <section class="info-section">
@@ -255,7 +246,7 @@
         }
 
         @if (activeTab === 'activity') {
-          <div id="activity-tab" class="tab-pane activity-tab" aria-hidden="false">
+          <div class="tab-pane activity-tab">
             <section class="activity-section">
               <h2 class="section-title">
                 <i class="fas fa-history"></i>
@@ -351,7 +342,6 @@
           Compartir
         </button>
       </div>
-
       @if (showToast) {
         <div class="toast" [class.show]="showToast">
           <i class="fas fa-check-circle"></i>

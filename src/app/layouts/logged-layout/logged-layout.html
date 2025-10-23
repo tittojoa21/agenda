@@ -7,16 +7,15 @@
       </a>
     </div>
 
-    <nav class="main-nav" aria-label="Navegación principal">
+    <nav class="main-nav">
       <ul class="nav-list">
-        <li class="nav-item">
+        <li>
           <a [routerLink]='["/"]' 
              class="nav-link"
              routerLinkActive="active" 
-             [routerLinkActiveOptions]="{exact: true}"
-             aria-current="page">
+             [routerLinkActiveOptions]="{exact: true}">
             <i class="fas fa-users nav-icon"></i>
-            <span class="nav-text">Contactos</span>
+            <span>Contactos</span>
             @if (contactsCount > 0) {
               <span class="nav-badge">{{contactsCount}}</span>
             }
@@ -36,10 +35,7 @@
         </div>
       </div>
       
-      <button class="btn-logout" 
-              (click)="showLogoutModal()"
-              aria-label="Cerrar sesión"
-              title="Cerrar sesión">
+      <button class="btn-logout" (click)="showLogoutModal()">
         <i class="fas fa-sign-out-alt"></i>
         <span class="logout-text">Salir</span>
       </button>

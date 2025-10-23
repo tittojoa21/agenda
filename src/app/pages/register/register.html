@@ -4,8 +4,6 @@
   <div class="floating-shapes">
     <div class="shape shape-1"></div>
     <div class="shape shape-2"></div>
-    <div class="shape shape-3"></div>
-    <div class="shape shape-4"></div>
   </div>
   
   <div class="register-container">
@@ -15,7 +13,6 @@
           <div class="logo-inner">
             <i class="fas fa-user-plus"></i>
           </div>
-          <div class="logo-glow"></div>
         </div>
         
         <h1>Crear Cuenta</h1>
@@ -37,7 +34,6 @@
               [class.error]="errorRegister && !formData.firstName">
             <i class="input-icon fas fa-user"></i>
             <label for="firstName">Nombre</label>
-            <div class="input-underline"></div>
           </div>
         </div>
 
@@ -55,7 +51,6 @@
               [class.error]="errorRegister && !formData.lastName">
             <i class="input-icon fas fa-user"></i>
             <label for="lastName">Apellido</label>
-            <div class="input-underline"></div>
           </div>
         </div>
         
@@ -73,7 +68,6 @@
               [class.error]="errorRegister && !formData.email">
             <i class="input-icon fas fa-envelope"></i>
             <label for="email">Correo electrónico</label>
-            <div class="input-underline"></div>
           </div>
         </div>
         
@@ -95,7 +89,6 @@
             <button type="button" class="password-toggle" (click)="togglePasswordVisibility('password')">
               <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"></i>
             </button>
-            <div class="input-underline"></div>
           </div>
         </div>
         
@@ -117,7 +110,6 @@
             <button type="button" class="password-toggle" (click)="togglePasswordVisibility('confirmPassword')">
               <i class="fas" [class.fa-eye]="!showConfirmPassword" [class.fa-eye-slash]="showConfirmPassword"></i>
             </button>
-            <div class="input-underline"></div>
           </div>
         </div>
         
@@ -135,12 +127,7 @@
           <span class="button-text">
             {{ isLoading ? 'Creando cuenta...' : 'Crear Cuenta' }}
           </span>
-          <i 
-            class="button-icon fas" 
-            [class.fa-arrow-right]="!isLoading" 
-            [class.fa-spinner]="isLoading" 
-            [class.fa-spin]="isLoading">
-          </i>
+          <i class="button-icon fas fa-arrow-right"></i>
         </button>
       </form>
       
