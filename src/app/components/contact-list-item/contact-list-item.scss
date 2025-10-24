@@ -52,33 +52,6 @@ $transition: all 0.3s ease;
     }
   }
 
-  &.detailed {
-    align-items: flex-start;
-    padding: 20px;
-
-    .contact-info {
-      flex: 1;
-    }
-
-    .contact-details {
-      margin-top: 8px;
-    }
-  }
-
-  &.favorite {
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), $white);
-    border-color: rgba(255, 215, 0, 0.2);
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: linear-gradient(to bottom, #ffd700, #ffed4e);
-    }
-  }
 }
 
 .contact-avatar {
@@ -139,8 +112,12 @@ $transition: all 0.3s ease;
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  0%, 100% { 
+    transform: scale(1); 
+  }
+  50% { 
+    transform: scale(1.1); 
+  }
 }
 
 .contact-info {
@@ -177,56 +154,6 @@ $transition: all 0.3s ease;
       flex-shrink: 0;
     }
   }
-}
-
-.contact-details {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 100%;
-
-  .contact-company,
-  .contact-email,
-  .contact-phone {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: $medium-text;
-    font-size: 0.9rem;
-    text-decoration: none;
-    transition: $transition;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
-
-    i {
-      width: 14px;
-      color: $primary-color;
-      font-size: 0.8rem;
-      flex-shrink: 0;
-    }
-
-    &:hover {
-      color: $primary-color;
-
-      &.contact-email,
-      &.contact-phone {
-        text-decoration: underline;
-      }
-    }
-  }
-}
-
-.contact-description {
-  color: $medium-text;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  margin: 8px 0 0 0;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  width: 100%;
 }
 
 .contact-actions {
@@ -366,17 +293,6 @@ $transition: all 0.3s ease;
       }
     }
 
-    .contact-details {
-      align-items: center;
-      
-      .contact-company,
-      .contact-email,
-      .contact-phone {
-        justify-content: center;
-        font-size: 0.8rem;
-      }
-    }
-
     .contact-actions {
       justify-content: center;
       margin-top: 8px;
@@ -386,10 +302,6 @@ $transition: all 0.3s ease;
         height: 30px;
         font-size: 0.75rem;
       }
-    }
-
-    .contact-description {
-      text-align: center;
     }
   }
 }

@@ -103,213 +103,128 @@
         </div>
       </div>
 
-      <nav class="tabs-navigation">
-        <button 
-          class="tab-btn" 
-          [class.active]="activeTab === 'info'"
-          (click)="setActiveTab('info')">
-          <i class="fas fa-info-circle"></i>
-          Información
-        </button>
-        <button 
-          class="tab-btn" 
-          [class.active]="activeTab === 'activity'"
-          (click)="setActiveTab('activity')">
-          <i class="fas fa-history"></i>
-          Actividad
-        </button>
-      </nav>
-
       <div class="tab-content">
-        @if (activeTab === 'info') {
-          <div class="tab-pane info-tab">
-            
-            @if (hasContactInfo()) {
-              <section class="info-section">
-                <h2 class="section-title">
-                  <i class="fas fa-address-card"></i>
-                  Información de Contacto
-                </h2>
-                
-                <div class="info-grid">
-                  @if (contacto.email) {
-                    <div class="info-item">
-                      <div class="info-icon">
-                        <i class="fas fa-envelope"></i>
-                      </div>
-                      <div class="info-content">
-                        <div class="info-text">
-                          <label class="info-label">Email</label>
-                          <a [href]="'mailto:' + contacto.email" class="info-value" 
-                             target="_blank" rel="noopener">
-                            {{ contacto.email }}
-                          </a>
-                        </div>
-                        <button class="copy-btn" (click)="copyToClipboard(contacto.email)" 
-                                title="Copiar email">
-                          <i class="fas fa-copy"></i>
-                        </button>
-                      </div>
-                    </div>
-                  }
-
-                  @if (contacto.number) {
-                    <div class="info-item">
-                      <div class="info-icon">
-                        <i class="fas fa-phone"></i>
-                      </div>
-                      <div class="info-content">
-                        <div class="info-text">
-                          <label class="info-label">Teléfono</label>
-                          <a [href]="'tel:' + contacto.number" class="info-value">
-                            {{ formatPhoneNumber(contacto.number) }}
-                          </a>
-                        </div>
-                        <button class="copy-btn" (click)="copyToClipboard(contacto.number)" 
-                                title="Copiar teléfono">
-                          <i class="fas fa-copy"></i>
-                        </button>
-                      </div>
-                    </div>
-                  }
-
-                  @if (contacto.address) {
-                    <div class="info-item">
-                      <div class="info-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                      </div>
-                      <div class="info-content">
-                        <div class="info-text">
-                          <label class="info-label">Dirección</label>
-                          <span class="info-value">{{ contacto.address }}</span>
-                        </div>
-                        <button class="copy-btn" (click)="copyToClipboard(contacto.address)" 
-                                title="Copiar dirección">
-                          <i class="fas fa-copy"></i>
-                        </button>
-                      </div>
-                    </div>
-                  }
-                </div>
-              </section>
-            }
-
-            @if (contacto.company) {
-              <section class="info-section">
-                <h2 class="section-title">
-                  <i class="fas fa-building"></i>
-                  Información Profesional
-                </h2>
-                
-                <div class="info-grid">
+        <div class="tab-pane info-tab">
+          
+          @if (hasContactInfo()) {
+            <section class="info-section">
+              <h2 class="section-title">
+                <i class="fas fa-address-card"></i>
+                Información de Contacto
+              </h2>
+              
+              <div class="info-grid">
+                @if (contacto.email) {
                   <div class="info-item">
                     <div class="info-icon">
-                      <i class="fas fa-briefcase"></i>
+                      <i class="fas fa-envelope"></i>
                     </div>
                     <div class="info-content">
                       <div class="info-text">
-                        <label class="info-label">Compañía</label>
-                        <span class="info-value">{{ contacto.company }}</span>
+                        <label class="info-label">Email</label>
+                        <a [href]="'mailto:' + contacto.email" class="info-value" 
+                           target="_blank" rel="noopener">
+                          {{ contacto.email }}
+                        </a>
                       </div>
+                      <button class="copy-btn" (click)="copyToClipboard(contacto.email)" 
+                              title="Copiar email">
+                        <i class="fas fa-copy"></i>
+                      </button>
                     </div>
                   </div>
-                </div>
-              </section>
-            }
+                }
 
-            @if (contacto.description) {
-              <section class="info-section">
-                <h2 class="section-title">
-                  <i class="fas fa-file-alt"></i>
-                  Notas
-                </h2>
-                <div class="notes-content">
-                  <p>{{ contacto.description }}</p>
-                </div>
-              </section>
-            }
+                @if (contacto.number) {
+                  <div class="info-item">
+                    <div class="info-icon">
+                      <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="info-content">
+                      <div class="info-text">
+                        <label class="info-label">Teléfono</label>
+                        <a [href]="'tel:' + contacto.number" class="info-value">
+                          {{ formatPhoneNumber(contacto.number) }}
+                        </a>
+                      </div>
+                      <button class="copy-btn" (click)="copyToClipboard(contacto.number)" 
+                              title="Copiar teléfono">
+                        <i class="fas fa-copy"></i>
+                      </button>
+                    </div>
+                  </div>
+                }
 
-            @if (!hasContactInfo() && !contacto.description) {
-              <div class="no-info">
-                <div class="no-info-icon">
-                  <i class="fas fa-info-circle"></i>
-                </div>
-                <h3>No hay información adicional</h3>
-                <p>Este contacto no tiene información de contacto agregada.</p>
-                <button class="btn-primary" (click)="editContact()">
-                  <i class="fas fa-edit"></i>
-                  Agregar información
-                </button>
+                @if (contacto.address) {
+                  <div class="info-item">
+                    <div class="info-icon">
+                      <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="info-content">
+                      <div class="info-text">
+                        <label class="info-label">Dirección</label>
+                        <span class="info-value">{{ contacto.address }}</span>
+                      </div>
+                      <button class="copy-btn" (click)="copyToClipboard(contacto.address)" 
+                              title="Copiar dirección">
+                        <i class="fas fa-copy"></i>
+                      </button>
+                    </div>
+                  </div>
+                }
               </div>
-            }
-          </div>
-        }
+            </section>
+          }
 
-        @if (activeTab === 'activity') {
-          <div class="tab-pane activity-tab">
-            <section class="activity-section">
+          @if (contacto.company) {
+            <section class="info-section">
               <h2 class="section-title">
-                <i class="fas fa-history"></i>
-                Historial de Actividad
+                <i class="fas fa-building"></i>
+                Información Profesional
               </h2>
               
-              <div class="activity-timeline">
-                <div class="activity-item">
-                  <div class="activity-icon created">
-                    <i class="fas fa-user-plus"></i>
+              <div class="info-grid">
+                <div class="info-item">
+                  <div class="info-icon">
+                    <i class="fas fa-briefcase"></i>
                   </div>
-                  <div class="activity-content">
-                    <div class="activity-header">
-                      <span class="activity-title">Contacto agregado</span>
-                      <span class="activity-time">Hace 2 días</span>
+                  <div class="info-content">
+                    <div class="info-text">
+                      <label class="info-label">Compañía</label>
+                      <span class="info-value">{{ contacto.company }}</span>
                     </div>
-                    <p class="activity-description">Contacto añadido a la agenda</p>
                   </div>
                 </div>
-
-                @if (contacto.isFavorite) {
-                  <div class="activity-item">
-                    <div class="activity-icon favorite">
-                      <i class="fas fa-star"></i>
-                    </div>
-                    <div class="activity-content">
-                      <div class="activity-header">
-                        <span class="activity-title">Marcado como favorito</span>
-                        <span class="activity-time">Hace 1 día</span>
-                      </div>
-                      <p class="activity-description">Agregado a contactos importantes</p>
-                    </div>
-                  </div>
-                }
-
-                @if (contacto.email || contacto.number) {
-                  <div class="activity-item">
-                    <div class="activity-icon updated">
-                      <i class="fas fa-sync-alt"></i>
-                    </div>
-                    <div class="activity-content">
-                      <div class="activity-header">
-                        <span class="activity-title">Información actualizada</span>
-                        <span class="activity-time">Hace 3 horas</span>
-                      </div>
-                      <p class="activity-description">Detalles de contacto modificados</p>
-                    </div>
-                  </div>
-                }
               </div>
-
-              @if (!contacto.isFavorite && !contacto.email && !contacto.number) {
-                <div class="no-activity">
-                  <div class="no-activity-icon">
-                    <i class="fas fa-clock"></i>
-                  </div>
-                  <h3>No hay actividad reciente</h3>
-                  <p>Las interacciones con este contacto aparecerán aquí.</p>
-                </div>
-              }
             </section>
-          </div>
-        }
+          }
+
+          @if (contacto.description) {
+            <section class="info-section">
+              <h2 class="section-title">
+                <i class="fas fa-file-alt"></i>
+                Notas
+              </h2>
+              <div class="notes-content">
+                <p>{{ contacto.description }}</p>
+              </div>
+            </section>
+          }
+
+          @if (!hasContactInfo() && !contacto.description) {
+            <div class="no-info">
+              <div class="no-info-icon">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <h3>No hay información adicional</h3>
+              <p>Este contacto no tiene información de contacto agregada.</p>
+              <button class="btn-primary" (click)="editContact()">
+                <i class="fas fa-edit"></i>
+                Agregar información
+              </button>
+            </div>
+          }
+        </div>
       </div>
 
       <div class="quick-actions">

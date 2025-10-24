@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ContactsService } from '../../services/contacts-service';
 import { Contact } from '../../interfaces/contacto';
+import { ModalHelpers } from '../../utils/modals'; 
 
 @Component({
   selector: 'app-contact-details-page',
@@ -20,7 +21,6 @@ export class ContactDetailsPage implements OnInit {
   cargandoContacto = false;
   showError = false;
   errorMessage = '';
-  activeTab: 'info' | 'activity' = 'info';
   
   toastMessage = '';
   showToast = false;
@@ -87,8 +87,9 @@ export class ContactDetailsPage implements OnInit {
   async deleteContact(): Promise<void> {
     if (!this.contacto) return;
 
-    const contactName = this.getFullName();
-    if (!confirm(`¿Estás seguro de que quieres eliminar a "${contactName}"? Esta acción no se puede deshacer.`)) {
+    const confirmed = await ModalHelpers.confirmDelete('el contacto ' + this.getFullName() + '');
+
+    if (!confirmed) {
       return;
     }
 
@@ -104,7 +105,7 @@ export class ContactDetailsPage implements OnInit {
     } catch (error: any) {
       console.error('Error deleting contact:', error);
       this.showError = true;
-      this.errorMessage = error.message || 'Error al eliminar el contacto';
+      this.errorMessage = error.message || 'Error al eliminar el contacto. Inténtalo de nuevo.';
     }
   }
 
@@ -128,10 +129,6 @@ export class ContactDetailsPage implements OnInit {
   hasContactInfo(): boolean {
     if (!this.contacto) return false;
     return !!(this.contacto.email || this.contacto.number || this.contacto.address || this.contacto.company);
-  }
-
-  setActiveTab(tab: 'info' | 'activity'): void {
-    this.activeTab = tab;
   }
 
   goBack(): void {
