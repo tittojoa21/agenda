@@ -42,7 +42,6 @@ $transition: all 0.3s ease;
   .brand-link {
     display: flex;
     align-items: center;
-    gap: 12px;
     text-decoration: none;
     color: $dark-text;
     font-weight: 700;
@@ -52,11 +51,6 @@ $transition: all 0.3s ease;
     &:hover {
       color: $primary-color;
       transform: translateY(-1px);
-    }
-
-    .brand-icon {
-      color: $primary-color;
-      font-size: 1.8rem;
     }
 
     .brand-text {
@@ -84,7 +78,6 @@ $transition: all 0.3s ease;
   .nav-link {
     display: flex;
     align-items: center;
-    gap: 8px;
     padding: 12px 20px;
     text-decoration: none;
     color: $medium-text;
@@ -101,26 +94,6 @@ $transition: all 0.3s ease;
       color: $primary-color;
       background: rgba($primary-color, 0.1);
       box-shadow: 0 2px 8px rgba($primary-color, 0.2);
-    }
-
-    .nav-icon {
-      font-size: 1.1rem;
-      transition: $transition;
-      width: 20px;
-    }
-
-    .nav-badge {
-      background: $primary-color;
-      color: $white;
-      font-size: 0.7rem;
-      padding: 2px 6px;
-      border-radius: 10px;
-      min-width: 18px;
-      height: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
     }
   }
 }
@@ -147,7 +120,11 @@ $transition: all 0.3s ease;
       align-items: center;
       justify-content: center;
       color: $white;
-      font-size: 1.5rem;
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
     }
 
     .user-details {
@@ -171,7 +148,6 @@ $transition: all 0.3s ease;
   .btn-logout {
     display: flex;
     align-items: center;
-    gap: 8px;
     padding: 10px 16px;
     background: rgba($error-color, 0.1);
     color: $error-color;
@@ -232,6 +208,9 @@ $transition: all 0.3s ease;
   }
 }
 
+svg {
+  fill: currentColor;
+}
 
 @media (max-width: 768px) {
   .layout-header .header-container {
@@ -285,7 +264,6 @@ $transition: all 0.3s ease;
     padding: 1rem;
   }
 }
-
 
 .nav-link:focus-visible,
 .btn-logout:focus-visible {

@@ -26,7 +26,6 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
-
 .contact-form-container {
   min-height: 100vh;
   display: flex;
@@ -126,11 +125,6 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     box-shadow: 0 8px 24px rgba($primary-color, 0.3);
 
-    i {
-      font-size: 2rem;
-      color: $white;
-    }
-
     &::after {
       content: '';
       position: absolute;
@@ -192,10 +186,6 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       transform: scaleX(1);
     }
 
-    .input-icon {
-      color: $error-color;
-    }
-
     input, textarea {
       border-color: rgba($error-color, 0.3);
       
@@ -211,10 +201,6 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       transform: scaleX(1);
     }
 
-    .input-icon {
-      color: $success-color;
-    }
-
     input, textarea {
       border-color: rgba($success-color, 0.3);
     }
@@ -223,7 +209,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
 .input-container input, .form-textarea {
   width: 100%;
-  padding: 1rem 1rem 1rem 3rem;
+  padding: 1rem;
   border: 2px solid rgba($light-text, 0.2);
   border-radius: $border-radius-sm;
   background: $bg-light;
@@ -250,11 +236,6 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       background-clip: text;
       padding: 0 0.5rem;
     }
-
-    ~ .input-icon {
-      color: $primary-color;
-      transform: scale(1.1);
-    }
   }
 
   &:not(:placeholder-shown) {
@@ -274,7 +255,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
 .input-label {
   position: absolute;
-  left: 3rem;
+  left: 1rem;
   top: 50%;
   transform: translateY(-50%);
   color: $light-text;
@@ -287,7 +268,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: calc(100% - 4rem);
+  max-width: calc(100% - 2rem);
 }
 
 .form-textarea ~ .input-label {
@@ -299,21 +280,6 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 .form-textarea:not(:placeholder-shown) ~ .input-label {
   transform: translateY(-0.5rem) scale(0.8);
   top: 0.5rem;
-}
-
-.input-icon {
-  position: absolute;
-  left: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: $light-text;
-  transition: $transition;
-  font-size: 1.1rem;
-}
-
-.form-textarea ~ .input-icon {
-  top: 1.5rem;
-  transform: none;
 }
 
 .input-focus-border {
@@ -342,7 +308,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
   box-sizing: border-box;
 
-  i {
+  .error-icon {
     font-size: 0.875rem;
     flex-shrink: 0;
   }
@@ -361,7 +327,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
   box-sizing: border-box;
 
-  i {
+  .error-icon {
     font-size: 1.25rem;
     flex-shrink: 0;
   }
@@ -385,8 +351,6 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transition: $transition;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    min-width: 160px;
     justify-content: center;
     box-sizing: border-box;
     flex-shrink: 0;
@@ -456,10 +420,6 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     .header-icon {
       width: 70px;
       height: 70px;
-      
-      i {
-        font-size: 1.75rem;
-      }
     }
   }
 
@@ -475,15 +435,10 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .input-container input, .form-textarea {
-    padding: 0.875rem 0.875rem 0.875rem 2.75rem;
+    padding: 0.875rem;
   }
 
   .input-label {
-    left: 2.75rem;
-    max-width: calc(100% - 3.5rem);
-  }
-
-  .input-icon {
     left: 0.875rem;
   }
 }
@@ -512,27 +467,18 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     .header-icon {
       width: 50px;
       height: 50px;
-      
-      i {
-        font-size: 1.25rem;
-      }
     }
   }
 
   .input-container input, .form-textarea {
-    padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+    padding: 0.75rem;
     font-size: 0.95rem;
   }
 
   .input-label {
-    left: 2.5rem;
-    font-size: 0.95rem;
-    max-width: calc(100% - 3rem);
-  }
-
-  .input-icon {
     left: 0.75rem;
-    font-size: 1rem;
+    font-size: 0.95rem;
+    max-width: calc(100% - 1.5rem);
   }
 
   .form-actions {
@@ -551,7 +497,6 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
-
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
@@ -563,7 +508,6 @@ textarea:focus-visible {
   outline: 2px solid $primary-color;
   outline-offset: 2px;
 }
-
 
 @media (prefers-reduced-motion: reduce) {
   .contact-card,

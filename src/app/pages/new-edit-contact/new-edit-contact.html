@@ -9,15 +9,9 @@
 
   <div class="contact-card">
     <div class="form-header">
-      <div class="header-icon">
-        <i class="fas" [class.fa-user-edit]="idContacto()" [class.fa-user-plus]="!idContacto()"></i>
-      </div>
+      <div class="header-icon"></div>
       <h2 class="form-title">
-        @if(idContacto()) {
-          Editar contacto
-        } @else {
-          Nuevo contacto
-        }
+        Editar Contacto
       </h2>
       <p class="form-subtitle">
         @if(idContacto()) {
@@ -45,12 +39,11 @@
               placeholder=" "
               autocomplete="given-name">
             <label for="first-name" class="input-label">Nombre *</label>
-            <i class="input-icon fas fa-user"></i>
             <div class="input-focus-border"></div>
           </div>
           @if (fieldStates()['firstName']) {
             <div class="error-message">
-              <i class="fas fa-exclamation-circle"></i>
+              <span class="error-icon">⚠</span>
               {{ fieldStates()['firstName'] }}
             </div>
           }
@@ -69,12 +62,11 @@
               placeholder=" "
               autocomplete="family-name">
             <label for="last-name" class="input-label">Apellido</label>
-            <i class="input-icon fas fa-user-tag"></i>
             <div class="input-focus-border"></div>
           </div>
           @if (fieldStates()['lastName']) {
             <div class="error-message">
-              <i class="fas fa-exclamation-circle"></i>
+              <span class="error-icon">⚠</span>
               {{ fieldStates()['lastName'] }}
             </div>
           }
@@ -95,12 +87,11 @@
               placeholder=" "
               autocomplete="tel">
             <label for="phone" class="input-label">Teléfono *</label>
-            <i class="input-icon fas fa-phone"></i>
             <div class="input-focus-border"></div>
           </div>
           @if (fieldStates()['number']) {
             <div class="error-message">
-              <i class="fas fa-exclamation-circle"></i>
+              <span class="error-icon">⚠</span>
               {{ fieldStates()['number'] }}
             </div>
           }
@@ -119,12 +110,11 @@
               placeholder=" "
               autocomplete="email">
             <label for="email" class="input-label">Email</label>
-            <i class="input-icon fas fa-envelope"></i>
             <div class="input-focus-border"></div>
           </div>
           @if (fieldStates()['email']) {
             <div class="error-message">
-              <i class="fas fa-exclamation-circle"></i>
+              <span class="error-icon">⚠</span>
               {{ fieldStates()['email'] }}
             </div>
           }
@@ -143,12 +133,11 @@
               placeholder=" "
               autocomplete="street-address">
             <label for="address" class="input-label">Dirección</label>
-            <i class="input-icon fas fa-map-marker-alt"></i>
             <div class="input-focus-border"></div>
           </div>
           @if (fieldStates()['address']) {
             <div class="error-message">
-              <i class="fas fa-exclamation-circle"></i>
+              <span class="error-icon">⚠</span>
               {{ fieldStates()['address'] }}
             </div>
           }
@@ -167,12 +156,11 @@
               placeholder=" "
               autocomplete="organization">
             <label for="company" class="input-label">Compañía</label>
-            <i class="input-icon fas fa-building"></i>
             <div class="input-focus-border"></div>
           </div>
           @if (fieldStates()['company']) {
             <div class="error-message">
-              <i class="fas fa-exclamation-circle"></i>
+              <span class="error-icon">⚠</span>
               {{ fieldStates()['company'] }}
             </div>
           }
@@ -191,12 +179,11 @@
               rows="3"
               class="form-textarea"></textarea>
             <label for="description" class="input-label">Descripción</label>
-            <i class="input-icon fas fa-file-alt"></i>
             <div class="input-focus-border"></div>
           </div>
           @if (fieldStates()['description']) {
             <div class="error-message">
-              <i class="fas fa-exclamation-circle"></i>
+              <span class="error-icon">⚠</span>
               {{ fieldStates()['description'] }}
             </div>
           }
@@ -214,12 +201,11 @@
               placeholder=" "
               autocomplete="photo">
             <label for="image" class="input-label">URL Imagen</label>
-            <i class="input-icon fas fa-image"></i>
             <div class="input-focus-border"></div>
           </div>
           @if (fieldStates()['image']) {
             <div class="error-message">
-              <i class="fas fa-exclamation-circle"></i>
+              <span class="error-icon">⚠</span>
               {{ fieldStates()['image'] }}
             </div>
           }
@@ -228,23 +214,17 @@
 
       @if (errorEnBack()) {
         <div class="error-banner">
-          <i class="fas fa-exclamation-triangle"></i>
+          <span class="error-icon">⚠</span>
           <span>{{ errorMessage() }}</span>
         </div>
       }
 
       <div class="form-actions">
         <button type="button" class="btn-secondary" (click)="cancel()" [disabled]="solicitudABackEnCurso()">
-          <i class="fas fa-times"></i>
-          Cancelar
+          <span class="btn-text">Cancelar</span>
         </button>
         <button type="submit" class="btn-primary" [disabled]="newContactForm.invalid || solicitudABackEnCurso()">
-          <i class="fas" [class.fa-save]="idContacto()" [class.fa-plus]="!idContacto()"></i>
-          @if(idContacto()) {
-            Actualizar contacto
-          } @else {
-            Crear contacto
-          }
+          <span class="btn-text">Guardar</span>
         </button>
       </div>
     </form>

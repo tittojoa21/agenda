@@ -2,14 +2,12 @@
   <div class="header-section">
     <div class="header-content">
       <h1 class="page-title">
-        <i class="fas fa-address-book"></i>
         Mis Contactos
       </h1>
     </div>
 
     <div class="search-section">
       <div class="search-container">
-        <i class="fas fa-search search-icon"></i>
         <input 
           type="text" 
           placeholder="Buscar contactos..." 
@@ -18,7 +16,9 @@
           (input)="onSearch($event)">
         @if (searchTerm) {
           <button class="clear-search" (click)="clearSearch()">
-            <i class="fas fa-times"></i>
+            <svg viewBox="0 0 24 24">
+              <path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
           </button>
         }
       </div>
@@ -33,11 +33,15 @@
   } @else if (showError && !isLoading) {
     <div class="error-state">
       <div class="error-content">
-        <i class="fas fa-exclamation-triangle"></i>
+        <svg viewBox="0 0 24 24">
+          <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
         <h3>Error al cargar contactos</h3>
         <p>{{ errorMessage }}</p>
         <button class="btn-primary" (click)="reloadContacts()">
-          <i class="fas fa-redo"></i>
+          <svg viewBox="0 0 24 24">
+            <path fill="currentColor" d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+          </svg>
           Reintentar
         </button>
       </div>
@@ -46,7 +50,6 @@
     <div class="stats-section">
       <div class="stat-card">
         <div class="stat-icon">
-          <i class="fas fa-users"></i>
         </div>
         <div class="stat-info">
           <span class="stat-number">{{ totalContacts }}</span>
@@ -55,7 +58,6 @@
       </div>
       <div class="stat-card">
         <div class="stat-icon favorite">
-          <i class="fas fa-star"></i>
         </div>
         <div class="stat-info">
           <span class="stat-number">{{ getFavoriteCount() }}</span>
@@ -68,7 +70,6 @@
       <div class="section-header">
         <h2>Lista de Contactos</h2>
         <button class="toggle-form-btn" (click)="toggleContactForm()">
-          <i class="fas" [class.fa-plus]="!showContactForm" [class.fa-times]="showContactForm"></i>
           {{ showContactForm ? 'Cancelar' : 'Nuevo Contacto' }}
         </button>
       </div>
@@ -76,7 +77,6 @@
       <div class="contact-form-container" [class.active]="showContactForm">
         <div class="form-card">
           <h3>
-            <i class="fas fa-user-plus"></i>
             Crear Nuevo Contacto
           </h3>
           
@@ -84,7 +84,6 @@
             <div class="form-grid">
               <div class="form-group required">
                 <label for="first-name" class="form-label">
-                  <i class="fas fa-user"></i>
                   Nombre
                 </label>
                 <input 
@@ -100,7 +99,6 @@
 
               <div class="form-group">
                 <label for="last-name" class="form-label">
-                  <i class="fas fa-user"></i>
                   Apellido
                 </label>
                 <input 
@@ -115,7 +113,6 @@
 
               <div class="form-group">
                 <label for="email" class="form-label">
-                  <i class="fas fa-envelope"></i>
                   Email
                 </label>
                 <input 
@@ -130,7 +127,6 @@
 
               <div class="form-group required">
                 <label for="number" class="form-label">
-                  <i class="fas fa-phone"></i>
                   Teléfono
                 </label>
                 <input 
@@ -147,7 +143,6 @@
 
               <div class="form-group full-width">
                 <label for="address" class="form-label">
-                  <i class="fas fa-map-marker-alt"></i>
                   Dirección
                 </label>
                 <input 
@@ -162,7 +157,6 @@
 
               <div class="form-group">
                 <label for="company" class="form-label">
-                  <i class="fas fa-building"></i>
                   Compañía
                 </label>
                 <input 
@@ -177,7 +171,6 @@
 
               <div class="form-group full-width">
                 <label for="description" class="form-label">
-                  <i class="fas fa-file-alt"></i>
                   Descripción
                 </label>
                 <textarea 
@@ -192,7 +185,6 @@
 
               <div class="form-group full-width">
                 <label for="image" class="form-label">
-                  <i class="fas fa-image"></i>
                   URL de Imagen
                 </label>
                 <input 
@@ -207,7 +199,9 @@
 
             @if (showError && errorMessage) {
               <div class="error-message">
-                <i class="fas fa-exclamation-circle"></i>
+                <svg viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
                 {{ errorMessage }}
               </div>
             }
@@ -217,14 +211,12 @@
                 type="button" 
                 class="btn-secondary" 
                 (click)="toggleContactForm()">
-                <i class="fas fa-times"></i>
                 Cancelar
               </button>
               <button 
                 type="button" 
                 class="btn-secondary" 
                 (click)="crearContactoEjemplo()">
-                <i class="fas fa-magic"></i>
                 Ejemplo
               </button>
               <button 
@@ -232,10 +224,8 @@
                 class="btn-primary" 
                 [disabled]="isSubmitting || !newContact.firstName || !newContact.number">
                 @if (isSubmitting) {
-                  <i class="fas fa-spinner fa-spin"></i>
                   Creando...
                 } @else {
-                  <i class="fas fa-plus"></i>
                   Crear Contacto
                 }
               </button>
@@ -247,23 +237,19 @@
       <div class="contacts-container">
         @if (showNoResults) {
           <div class="no-results">
-            <i class="fas fa-search"></i>
             <h3>No se encontraron contactos</h3>
             <p>Intenta con otros términos de búsqueda</p>
             <button class="btn-primary" (click)="clearSearch()">
-              <i class="fas fa-times"></i>
               Limpiar búsqueda
             </button>
           </div>
         } @else if (showEmptyState) {
           <div class="empty-state">
             <div class="empty-icon">
-              <i class="fas fa-users"></i>
             </div>
             <h3>No hay contactos</h3>
             <p>Comienza agregando tu primer contacto</p>
             <button class="btn-primary" (click)="toggleContactForm()">
-              <i class="fas fa-plus"></i>
               Crear Primer Contacto
             </button>
           </div>
@@ -285,7 +271,6 @@
 
   @if (!showContactForm) {
     <button class="floating-action-btn" (click)="toggleContactForm()">
-      <i class="fas fa-plus"></i>
     </button>
   }
 </div>

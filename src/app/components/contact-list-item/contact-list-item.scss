@@ -51,7 +51,6 @@ $transition: all 0.3s ease;
       font-size: 0.95rem;
     }
   }
-
 }
 
 .contact-avatar {
@@ -104,10 +103,15 @@ $transition: all 0.3s ease;
     align-items: center;
     justify-content: center;
     color: $dark-text;
-    font-size: 10px;
     border: 2px solid $white;
     box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
     animation: pulse 2s infinite;
+    
+    .star-icon {
+      width: 12px;
+      height: 12px;
+      fill: $dark-text;
+    }
   }
 }
 
@@ -172,7 +176,6 @@ $transition: all 0.3s ease;
     justify-content: center;
     cursor: pointer;
     transition: $transition;
-    font-size: 0.9rem;
     position: relative;
     flex-shrink: 0;
 
@@ -216,6 +219,12 @@ $transition: all 0.3s ease;
         box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
       }
     }
+
+    .action-icon {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
   }
 }
 
@@ -251,7 +260,11 @@ $transition: all 0.3s ease;
       .btn-icon {
         width: 34px;
         height: 34px;
-        font-size: 0.85rem;
+        
+        .action-icon {
+          width: 16px;
+          height: 16px;
+        }
       }
     }
   }
@@ -300,7 +313,11 @@ $transition: all 0.3s ease;
       .btn-icon {
         width: 30px;
         height: 30px;
-        font-size: 0.75rem;
+        
+        .action-icon {
+          width: 14px;
+          height: 14px;
+        }
       }
     }
   }

@@ -19,7 +19,9 @@
     
     @if (contacto().isFavorite) {
       <div class="favorite-badge" title="Contacto favorito">
-        <i class="fas fa-star"></i>
+        <svg class="star-icon" viewBox="0 0 24 24">
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+        </svg>
       </div>
     }
   </div>
@@ -42,17 +44,25 @@
               (click)="onToggleFavorite($event)"
               [title]="contacto().isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'"
               [disabled]="isTogglingFavorite">
-        <i class="fas" 
-           [class.fa-star]="contacto().isFavorite" 
-           [class.fa-star]="!contacto().isFavorite"
-           [class.fa-spinner]="isTogglingFavorite"
-           [class.fa-spin]="isTogglingFavorite"></i>
+        <svg class="action-icon" viewBox="0 0 24 24">
+          @if (isTogglingFavorite) {
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" 
+                    stroke-dasharray="15.85 15.85" stroke-dashoffset="0">
+              <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" 
+                              dur="1s" repeatCount="indefinite"/>
+            </circle>
+          } @else {
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+          }
+        </svg>
       </button>
 
       <button class="btn-icon edit-btn"
               (click)="onEditContact($event)"
               title="Editar contacto">
-        <i class="fas fa-edit"></i>
+        <svg class="action-icon" viewBox="0 0 24 24">
+          <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+        </svg>
       </button>
 
       <button class="btn-icon delete-btn"
@@ -60,10 +70,17 @@
               (click)="showDeleteModal()"
               [title]="isDeleting ? 'Eliminando...' : 'Eliminar contacto'"
               [disabled]="isDeleting">
-        <i class="fas" 
-           [class.fa-trash]="!isDeleting" 
-           [class.fa-spinner]="isDeleting"
-           [class.fa-spin]="isDeleting"></i>
+        <svg class="action-icon" viewBox="0 0 24 24">
+          @if (isDeleting) {
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" 
+                    stroke-dasharray="15.85 15.85" stroke-dashoffset="0">
+              <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" 
+                              dur="1s" repeatCount="indefinite"/>
+            </circle>
+          } @else {
+            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+          }
+        </svg>
       </button>
     </div>
   }
